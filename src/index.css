@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "Mars Centra";
+  src: url("./assets/fonts/Mars Centra Font/marscentra-regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mars Centra";
+  src: url("./assets/fonts/Mars Centra Font/marscentra-bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mars Centra";
+  src: url("./assets/fonts/Mars Centra Font/marscentra-extrabold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  font-family: "Mars Centra", sans-serif;
+  color: #171717;
+  background: #f8f8f8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+}
+button {
+  font: inherit;
+}
