@@ -1,22 +1,33 @@
-import { Box } from "@mui/material";
-import { Outlet } from "react-router-dom";
+﻿import { Box } from "@mui/material";
+import { Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { NavBar } from "./NavBar";
+import MarketPerformanceFilters from "./common/Filters/GlobalFilters";
 
 export function AppShell() {
   const { user } = useAuth();
   const { isDark, toggleTheme } = useTheme();
+  const location = useLocation();
+  const shouldShowMarketFilters =
+    location.pathname.startsWith("/market-performance") ||
+    location.pathname.startsWith("/building-blocks");
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", bgcolor: "background.default" }}>
       <NavBar user={user} isDark={isDark} toggleTheme={toggleTheme} />
+      {shouldShowMarketFilters && <MarketPerformanceFilters />}
       <Box
         component="main"
         sx={{
-          minHeight: "calc(100vh - 74px)",
-          px: { xs: 2, sm: 4, xl: 5.5 },
-          py: { xs: 3, sm: 4.5 },
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          minHeight: 0,
+          px: { xs: 2, sm: 2.5, xl: 2.75 },
+          pt: 1.5,
+          pb: 2,
+          overflow: "hidden",
         }}
       >
         <Outlet />

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, IconButton, Popover, Tooltip, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+// import marsLogo from "../assets/logo/mars-pet-nutrition-logo.svg";
 
 type NavBarProps = {
   user: { name: string; role: string };
