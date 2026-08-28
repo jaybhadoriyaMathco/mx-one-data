@@ -1,60 +1,184 @@
 import {
+  Box,
   Checkbox,
+  Chip,
   ListSubheader,
   MenuItem,
   Select,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
   type SelectChangeEvent,
+  type SxProps,
+  type Theme,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 
-import type { RootState, AppDispatch } from "../../../store";
-
+import type { AppDispatch, RootState } from "../../../store";
 import {
-  setTech,
+  removeComparePeriod,
+  removeCompareYear,
   setChannel,
-  setSubChannel,
+  setMetric,
+  setNielsenArea,
+  setPeriod,
+  setPriceRange,
   setSegment,
   setServeSize,
-  setPriceRange,
-  setNielsenArea,
-  setMetric,
-  setPeriod,
+  setSubChannel,
+  setTech,
   setYear,
-  toggleCompareYear,
   toggleComparePeriod,
-  removeCompareYear,
-  removeComparePeriod,
+  toggleCompareYear,
 } from "../../../store/marketFiltersSlice";
-
-import "./MarketPerformanceFilters.css";
 
 type Option = {
   label: string;
   value: string;
 };
 
-type SegmentFilterProps = {
+const selectSx: SxProps<Theme> = {
+  height: 30,
+  bgcolor: "background.paper",
+  fontSize: 12,
+  "& .MuiSelect-select": {
+    py: 0,
+    height: 30,
+    display: "flex",
+    alignItems: "center",
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "divider",
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: "text.secondary",
+  },
+  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "primary.main",
+  },
+};
+
+const menuPaperSx: SxProps<Theme> = {
+  bgcolor: "background.paper",
+  color: "text.primary",
+  border: "1px solid",
+  borderColor: "divider",
+  mt: 0.5,
+  "& .MuiMenuItem-root": {
+    fontSize: 12,
+    minHeight: 32,
+    "&:hover": {
+      bgcolor: "primary.main",
+      color: "primary.contrastText",
+    },
+    "&.Mui-selected": {
+      bgcolor: "transparent",
+    },
+    "&.Mui-selected:hover": {
+      bgcolor: "primary.main",
+      color: "primary.contrastText",
+    },
+  },
+};
+
+const menuProps = {
+  PaperProps: {
+    sx: menuPaperSx,
+  },
+};
+
+function FilterGroup({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Box
+      sx={{
+        position: "relative",
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 0.75,
+        pl: 1.25,
+        "&::before": {
+          content: '""',
+          width: "1px",
+          height: 30,
+          bgcolor: "divider",
+          mr: 0.5,
+          flex: "0 0 auto",
+        },
+      }}
+    >
+      <Typography
+        sx={{
+          color: "text.secondary",
+          fontSize: 12,
+          fontWeight: 600,
+          lineHeight: "30px",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {label}
+      </Typography>
+      {children}
+    </Box>
+  );
+}
+
+function SegmentFilter({
+  value,
+  options,
+  onChange,
+}: {
   value: string;
   options: Option[];
   onChange: (value: string) => void;
-};
-
-function SegmentFilter({ value, options, onChange }: SegmentFilterProps) {
+}) {
   return (
-    <div className="market-filter-segment">
+    <ToggleButtonGroup
+      exclusive
+      size="small"
+      value={value}
+      onChange={(_, next) => {
+        if (next) onChange(next);
+      }}
+    sx={(theme) => ({
+    height: 30,
+    bgcolor: "background.paper",
+    "& .MuiToggleButtonGroup-grouped": {
+        height: 30,
+        px: 1.5,
+        borderColor: "divider",
+        color: "text.secondary",
+        fontSize: 12,
+        fontWeight: 400,
+        textTransform: "none",
+        "&:hover": {
+        bgcolor: alpha(theme.palette.primary.main, 0.12),
+        color: "primary.main",
+        },
+        "&.Mui-selected": {
+        bgcolor: "primary.main",
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+        fontWeight: 600,
+        },
+        "&.Mui-selected:hover": {
+        bgcolor: "primary.main",
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+        },
+    },
+    })}
+    >
       {options.map((option) => (
-        <button
-          type="button"
-          key={option.value}
-          className={`market-filter-segment__item ${
-            value === option.value ? "is-active" : ""
-          }`}
-          onClick={() => onChange(option.value)}
-        >
+        <ToggleButton key={option.value} value={option.value}>
           {option.label}
-        </button>
+        </ToggleButton>
       ))}
-    </div>
+    </ToggleButtonGroup>
   );
 }
 
@@ -83,26 +207,6 @@ function MarketPerformanceFilters() {
     ...compareYears.map((value) => `year:${value}`),
     ...comparePeriods.map((value) => `period:${value}`),
   ];
-
-  const menuProps = {
-    PaperProps: {
-      className: "market-filter-dropdown",
-    },
-  };
-
-  const compareMenuProps = {
-    PaperProps: {
-      className: "market-filter-dropdown market-filter-dropdown--compare",
-    },
-    anchorOrigin: {
-      vertical: "bottom" as const,
-      horizontal: "left" as const,
-    },
-    transformOrigin: {
-      vertical: "top" as const,
-      horizontal: "left" as const,
-    },
-  };
 
   const techOptions: Option[] = [
     { label: "All", value: "all" },
@@ -136,7 +240,6 @@ function MarketPerformanceFilters() {
           { label: "SS", value: "ss" },
           { label: "Proximity", value: "proximity" },
         ];
-
       case "traditional":
         return [
           { label: "All", value: "all" },
@@ -144,13 +247,10 @@ function MarketPerformanceFilters() {
           { label: "C&C", value: "c&c" },
           { label: "Other SS", value: "other-ss" },
         ];
-
       default:
         return [];
     }
   };
-
-  const subChannelOptions = getSubChannelOptions();
 
   const handleCompareChange = (event: SelectChangeEvent<string[]>) => {
     const value = event.target.value;
@@ -165,83 +265,93 @@ function MarketPerformanceFilters() {
       .map((item) => item.replace("period:", ""));
 
     compareYears.forEach((item) => {
-      if (!nextYears.includes(item)) {
-        dispatch(toggleCompareYear(item));
-      }
+      if (!nextYears.includes(item)) dispatch(toggleCompareYear(item));
     });
-
     nextYears.forEach((item) => {
-      if (!compareYears.includes(item)) {
-        dispatch(toggleCompareYear(item));
-      }
+      if (!compareYears.includes(item)) dispatch(toggleCompareYear(item));
     });
-
     comparePeriods.forEach((item) => {
-      if (!nextPeriods.includes(item)) {
-        dispatch(toggleComparePeriod(item));
-      }
+      if (!nextPeriods.includes(item)) dispatch(toggleComparePeriod(item));
     });
-
     nextPeriods.forEach((item) => {
-      if (!comparePeriods.includes(item)) {
-        dispatch(toggleComparePeriod(item));
-      }
+      if (!comparePeriods.includes(item)) dispatch(toggleComparePeriod(item));
     });
   };
 
   return (
-    <div
-      className={`market-filters ${
-        hasCompareSelection ? "has-compare-selection" : ""
-      }`}
+    <Box
+      sx={{
+        width: "100%",
+        bgcolor: "background.paper",
+        borderBottom: "1px solid",
+        borderColor: "divider",
+        color: "text.primary",
+      }}
     >
-      <div className="market-filters__body">
-        <div className="market-filters__label">FILTERS</div>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "flex-start",
+          flexWrap: "wrap",
+          columnGap: 1.25,
+          rowGap: 1,
+          px: 2.75,
+          pt: 1.25,
+          pb: hasCompareSelection ? 5.25 : 1.25,
+        }}
+      >
+        <Typography
+          sx={{
+            color: "text.secondary",
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: "0.3px",
+            lineHeight: "30px",
+            whiteSpace: "nowrap",
+          }}
+        >
+          FILTERS
+        </Typography>
 
-        <div className="market-filter-group">
-          <span className="market-filter-group__label">Tech</span>
+        <FilterGroup label="Tech">
           <SegmentFilter
             value={tech}
             options={techOptions}
             onChange={(value) => dispatch(setTech(value))}
           />
-        </div>
+        </FilterGroup>
 
-        <div className="market-filter-group">
-          <span className="market-filter-group__label">Channel</span>
+        <FilterGroup label="Channel">
           <SegmentFilter
             value={channel}
             options={channelOptions}
             onChange={(value) => dispatch(setChannel(value))}
           />
-        </div>
+        </FilterGroup>
 
         {channel !== "all" && (
-          <div className="market-filter-group">
-            <span className="market-filter-group__label">Sub-channel</span>
+          <FilterGroup label="Sub-channel">
             <SegmentFilter
               value={subChannel}
-              options={subChannelOptions}
+              options={getSubChannelOptions()}
               onChange={(value) => dispatch(setSubChannel(value))}
             />
-          </div>
+          </FilterGroup>
         )}
 
-        <div className="market-filter-group">
-          <span className="market-filter-group__label">Segment</span>
+        <FilterGroup label="Segment">
           <SegmentFilter
             value={segment}
             options={segmentOptions}
             onChange={(value) => dispatch(setSegment(value))}
           />
-        </div>
+        </FilterGroup>
 
-        <div className="market-filter-group">
-          <span className="market-filter-group__label">Serve Size</span>
+        <FilterGroup label="Serve Size">
           <Select
-            className="market-filter-select market-filter-select--serve"
             value={serveSize}
             size="small"
+            sx={{ ...selectSx, width: 126 }}
             MenuProps={menuProps}
             onChange={(event: SelectChangeEvent<string>) =>
               dispatch(setServeSize(event.target.value))
@@ -253,14 +363,13 @@ function MarketPerformanceFilters() {
             <MenuItem value="1.5-4kg">1.5–4kg</MenuItem>
             <MenuItem value="greater-4kg">&gt;4kg</MenuItem>
           </Select>
-        </div>
+        </FilterGroup>
 
-        <div className="market-filter-group">
-          <span className="market-filter-group__label">Price Range</span>
+        <FilterGroup label="Price Range">
           <Select
-            className="market-filter-select market-filter-select--price"
             value={priceRange}
             size="small"
+            sx={{ ...selectSx, width: 145 }}
             MenuProps={menuProps}
             onChange={(event: SelectChangeEvent<string>) =>
               dispatch(setPriceRange(event.target.value))
@@ -272,14 +381,13 @@ function MarketPerformanceFilters() {
             <MenuItem value="premium">Premium</MenuItem>
             <MenuItem value="superpremium">Superpremium</MenuItem>
           </Select>
-        </div>
+        </FilterGroup>
 
-        <div className="market-filter-group">
-          <span className="market-filter-group__label">Nielsen Area</span>
+        <FilterGroup label="Nielsen Area">
           <Select
-            className="market-filter-select market-filter-select--nielsen"
             value={nielsenArea}
             size="small"
+            sx={{ ...selectSx, width: 178 }}
             MenuProps={menuProps}
             onChange={(event: SelectChangeEvent<string>) =>
               dispatch(setNielsenArea(event.target.value))
@@ -290,47 +398,51 @@ function MarketPerformanceFilters() {
             <MenuItem value="central">Central</MenuItem>
             <MenuItem value="south">South</MenuItem>
           </Select>
-        </div>
+        </FilterGroup>
 
-        <div className="market-filter-group">
-          <span className="market-filter-group__label">Metric</span>
+        <FilterGroup label="Metric">
           <SegmentFilter
             value={metric}
             options={metricOptions}
             onChange={(value) => dispatch(setMetric(value))}
           />
-        </div>
+        </FilterGroup>
 
-        <div className="market-filter-group">
-          <span className="market-filter-group__label">Period</span>
+        <FilterGroup label="Period">
           <Select
-            className="market-filter-select market-filter-select--period"
             value={period}
             size="small"
+            sx={{ ...selectSx, width: 126 }}
             MenuProps={menuProps}
             onChange={(event: SelectChangeEvent<string>) =>
               dispatch(setPeriod(event.target.value))
             }
           >
-            <MenuItem value="p01">P01</MenuItem>
-            <MenuItem value="p02">P02</MenuItem>
-            <MenuItem value="p03">P03</MenuItem>
-            <MenuItem value="p04">P04</MenuItem>
-            <MenuItem value="p05">P05</MenuItem>
-            <MenuItem value="p06">P06</MenuItem>
-            <MenuItem value="p07">P07</MenuItem>
-            <MenuItem value="p08">P08</MenuItem>
-            <MenuItem value="p09">P09</MenuItem>
-            <MenuItem value="p10">P10</MenuItem>
-            <MenuItem value="p11">P11</MenuItem>
-            <MenuItem value="p12">P12</MenuItem>
-            <MenuItem value="p13">P13</MenuItem>
+            {[
+              "p01",
+              "p02",
+              "p03",
+              "p04",
+              "p05",
+              "p06",
+              "p07",
+              "p08",
+              "p09",
+              "p10",
+              "p11",
+              "p12",
+              "p13",
+            ].map((item) => (
+              <MenuItem key={item} value={item}>
+                {item.toUpperCase()}
+              </MenuItem>
+            ))}
           </Select>
 
           <Select
-            className="market-filter-select market-filter-select--year"
             value={year}
             size="small"
+            sx={{ ...selectSx, width: 126 }}
             MenuProps={menuProps}
             onChange={(event: SelectChangeEvent<string>) =>
               dispatch(setYear(event.target.value))
@@ -339,104 +451,156 @@ function MarketPerformanceFilters() {
             <MenuItem value="2025">2025</MenuItem>
             <MenuItem value="2026">2026</MenuItem>
           </Select>
-        </div>
+        </FilterGroup>
 
-        <div className="market-filter-group market-filter-group--compare">
-          <span className="market-filter-group__label">Compare with</span>
-
-          <div className="market-filter-compare-control">
+        <FilterGroup label="Compare with">
+          <Box sx={{ position: "relative", width: 136, height: 30 }}>
             <Select
               multiple
               displayEmpty
-              className="market-filter-select market-filter-select--compare"
               value={compareValues}
               size="small"
-              MenuProps={compareMenuProps}
+              sx={{ ...selectSx, width: 136 }}
+              MenuProps={{
+                ...menuProps,
+                PaperProps: {
+                  sx: { ...menuPaperSx, width: 250 },
+                },
+                anchorOrigin: { vertical: "bottom", horizontal: "left" },
+                transformOrigin: { vertical: "top", horizontal: "left" },
+              }}
               onChange={handleCompareChange}
               renderValue={() => "+ Add period"}
             >
-              <ListSubheader className="market-filter-dropdown__header">
+              <ListSubheader
+                sx={{
+                  bgcolor: "background.paper",
+                  color: "text.secondary",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.5px",
+                  lineHeight: "28px",
+                }}
+              >
                 YEAR
               </ListSubheader>
-
               <MenuItem value="year:2024">
-                <Checkbox
-                  size="small"
-                  checked={compareYears.includes("2024")}
-                />
+                <Checkbox size="small" checked={compareYears.includes("2024")} />
                 2024
               </MenuItem>
-
               <MenuItem value="year:2025">
-                <Checkbox
-                  size="small"
-                  checked={compareYears.includes("2025")}
-                />
+                <Checkbox size="small" checked={compareYears.includes("2025")} />
                 2025
               </MenuItem>
-
-              <ListSubheader className="market-filter-dropdown__header">
+              <ListSubheader
+                sx={{
+                  bgcolor: "background.paper",
+                  color: "text.secondary",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.5px",
+                  lineHeight: "28px",
+                }}
+              >
                 PERIOD
               </ListSubheader>
-
               <MenuItem value="period:YTD">
-                <Checkbox
-                  size="small"
-                  checked={comparePeriods.includes("YTD")}
-                />
+                <Checkbox size="small" checked={comparePeriods.includes("YTD")} />
                 YTD
               </MenuItem>
-
               <MenuItem value="period:P04">
-                <Checkbox
-                  size="small"
-                  checked={comparePeriods.includes("P04")}
-                />
+                <Checkbox size="small" checked={comparePeriods.includes("P04")} />
                 P04
               </MenuItem>
-
               <MenuItem value="period:P06">
-                <Checkbox
-                  size="small"
-                  checked={comparePeriods.includes("P06")}
-                />
+                <Checkbox size="small" checked={comparePeriods.includes("P06")} />
                 P06
               </MenuItem>
             </Select>
 
             {hasCompareSelection && (
-              <div className="compare-period-chips">
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 36,
+                  left: 0,
+                  display: "flex",
+                  gap: 0.75,
+                  whiteSpace: "nowrap",
+                }}
+              >
                 {compareYears.map((value) => (
-                  <button
-                    type="button"
+                  <Chip
                     key={`year-${value}`}
-                    className="compare-period-chip"
+                    size="small"
+                    label={value}
+                    onDelete={() => dispatch(removeCompareYear(value))}
                     onMouseDown={(event) => event.preventDefault()}
-                    onClick={() => dispatch(removeCompareYear(value))}
-                  >
-                    <span>{value}</span>
-                    <span className="compare-period-chip__close">×</span>
-                  </button>
+                    sx={(theme) => ({
+                    height: 26,
+                    bgcolor:
+                        theme.palette.mode === "dark"
+                        ? "#FFFFFF"
+                        : alpha(theme.palette.primary.main, 0.08),
+                    color: "primary.main",
+                    border: "1px solid",
+                    borderColor:
+                        theme.palette.mode === "dark"
+                        ? "#FFFFFF"
+                        : alpha(theme.palette.primary.main, 0.35),
+                    "& .MuiChip-deleteIcon": {
+                        color: "primary.main",
+                        fontSize: 16,
+                        margin: "0 2px 0 -2px",
+                        bgcolor: "transparent",
+                        borderRadius: 0,
+                        "&:hover": {
+                        color: "primary.main",
+                        bgcolor: "transparent",
+                        },
+                    },
+                    })}
+                  />
                 ))}
-
                 {comparePeriods.map((value) => (
-                  <button
-                    type="button"
+                  <Chip
                     key={`period-${value}`}
-                    className="compare-period-chip"
+                    size="small"
+                    label={value}
+                    onDelete={() => dispatch(removeComparePeriod(value))}
                     onMouseDown={(event) => event.preventDefault()}
-                    onClick={() => dispatch(removeComparePeriod(value))}
-                  >
-                    <span>{value}</span>
-                    <span className="compare-period-chip__close">×</span>
-                  </button>
+                    sx={(theme) => ({
+                    height: 26,
+                    bgcolor:
+                        theme.palette.mode === "dark"
+                        ? "#FFFFFF"
+                        : alpha(theme.palette.primary.main, 0.08),
+                    color: "primary.main",
+                    border: "1px solid",
+                    borderColor:
+                        theme.palette.mode === "dark"
+                        ? "#FFFFFF"
+                        : alpha(theme.palette.primary.main, 0.35),
+                    "& .MuiChip-deleteIcon": {
+                        color: "primary.main",
+                        fontSize: 16,
+                        margin: "0 2px 0 -2px",
+                        bgcolor: "transparent",
+                        borderRadius: 0,
+                        "&:hover": {
+                        color: "primary.main",
+                        bgcolor: "transparent",
+                        },
+                    },
+                    })}
+                  />
                 ))}
-              </div>
+              </Box>
             )}
-          </div>
-        </div>
-      </div>
-    </div>
+          </Box>
+        </FilterGroup>
+      </Box>
+    </Box>
   );
 }
 
