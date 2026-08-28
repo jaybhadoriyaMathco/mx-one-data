@@ -1,0 +1,265 @@
+/* ==================================================
+   COMMON KPI CARD
+================================================== */
+
+.kpi-card {
+  position: relative;
+
+  width: 100%;
+  height: 194px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(0, 0, 0, 0.08);
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.06);
+
+  font-family:
+    "Mars Centra",
+    Arial,
+    sans-serif;
+
+  color: #0a0a0a;
+}
+
+
+/* ==================================================
+   TOP ACCENT
+================================================== */
+
+.kpi-card__accent {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background: var(--kpi-accent);
+
+  border-radius:
+    12px 12px 0 0;
+}
+
+
+/* ==================================================
+   CONTENT
+================================================== */
+
+.kpi-card__content {
+  position: relative;
+
+  height: 100%;
+
+  box-sizing: border-box;
+
+  padding:
+    18px 20px 14px;
+}
+
+
+/* ==================================================
+   LABEL
+================================================== */
+
+.kpi-card__label {
+  color: #8a8a8a;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  line-height: 1.4;
+
+  letter-spacing: 0.2px;
+
+  text-transform: uppercase;
+}
+
+
+/* ==================================================
+   VALUE
+================================================== */
+
+.kpi-card__value {
+  margin-top: 9px;
+
+  color: #0a0a0a;
+
+  font-size: 30px;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: -0.3px;
+}
+
+
+/* ==================================================
+   COMPARISON
+================================================== */
+
+.kpi-card__comparison {
+  margin-top: 6px;
+
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 4px;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+}
+
+
+/* ==================================================
+   COMPARISON ICON
+================================================== */
+
+.kpi-card__comparison-icon {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 9px;
+
+  font-weight: 700;
+}
+
+
+/* ==================================================
+   POSITIVE
+================================================== */
+
+.kpi-card__comparison--positive {
+  color: #00a651;
+}
+
+.kpi-card__comparison--positive
+  .kpi-card__comparison-icon {
+  color: #00a651;
+}
+
+
+/* ==================================================
+   NEGATIVE
+================================================== */
+
+.kpi-card__comparison--negative {
+  color: #ff1414;
+}
+
+.kpi-card__comparison--negative
+  .kpi-card__comparison-icon {
+  color: #ff1414;
+}
+
+
+/* ==================================================
+   NEUTRAL
+================================================== */
+
+.kpi-card__comparison--neutral {
+  color: #555555;
+}
+
+.kpi-card__comparison--neutral
+  .kpi-card__comparison-icon {
+  color: #8a8a8a;
+}
+
+
+/* ==================================================
+   COMPARISON VALUE
+================================================== */
+
+.kpi-card__comparison-value {
+  font-weight: 600;
+}
+
+
+/* ==================================================
+   COMPARISON TEXT
+================================================== */
+
+.kpi-card__comparison-text {
+  color: #555555;
+
+  font-weight: 400;
+}
+
+
+/* ==================================================
+   SPARKLINE
+================================================== */
+
+.kpi-sparkline {
+  position: absolute;
+
+  left: 20px;
+  right: 20px;
+
+  bottom: 15px;
+
+  height: 62px;
+
+  pointer-events: none;
+}
+
+
+.kpi-sparkline__svg {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: visible;
+}
+
+
+/* ==================================================
+   HOVER
+================================================== */
+
+.kpi-card:hover {
+  box-shadow:
+    0 4px 8px -2px rgba(0, 0, 0, 0.08),
+    0 2px 4px -1px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ==================================================
+   REDUCED MOTION
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .kpi-card {
+    transition: none;
+  }
+}
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 700px) {
+  .kpi-card {
+    height: 190px;
+  }
+}
