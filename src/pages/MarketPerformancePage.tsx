@@ -1,21 +1,21 @@
-﻿import { Box } from "@mui/material";
+﻿import { Box, useTheme } from "@mui/material";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Sidebar, type SidebarEntry } from "../components/common/Sidebar/Sidebar";
-
 export function MarketPerformancePage() {
   const [collapsed, setCollapsed] = useState(false);
+  const isDark = useTheme()
 
   const items: SidebarEntry[] = [
     {
       label: "Executive View",
       path: "/market-performance/executive-view",
-      color: "#9B5DE5",
+      color: "#9b59b6",
     },
     {
       label: "Market Overview",
       path: "/market-performance/market-overview/share-volume",
-      color: "#9B5DE5",
+      color: isDark ? "#6060FF": "#0000A0",
       children: [
         { label: "Share & Volume", path: "/market-performance/market-overview/share-volume", color: "#9B5DE5" },
         { label: "Pricing & Price Index", path: "/market-performance/market-overview/pricing-price-index", color: "#9B5DE5" },

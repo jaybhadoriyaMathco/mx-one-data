@@ -1,0 +1,15 @@
+export const ROUTE_LABELS: Record<string, string> = {
+  "market-performance": "Market Performance",
+  "market-overview": "Market Overview",
+  "share-volume": "Share & Volume",
+  "pricing-price-index": "Pricing & Price Index",
+  "mars-distribution": "Mars Distribution",
+  "mars-vs-market": "MARS vs Market",
+  "category-sku": "Category & SKU",
+  "brand-channel-mix": "Brand & Channel Mix",
+  "executive-view": "Executive View",
+  "building-blocks": "Building Blocks",
+  "executive": "Executive",
+  performance: "Performance",
+  "fact-vs-fcst": "FACT vs FCST",
+};

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Sidebar, type SidebarEntry } from "../components/common/Sidebar/Sidebar";
+import { ModuleBreadcrumbs } from "../components/common/Breadcrumbs/ModuleBreadcrumbs";
 
 export function BuildingBlocksPage() {
   const [collapsed, setCollapsed] = useState(false);
@@ -31,6 +32,7 @@ export function BuildingBlocksPage() {
         onToggleCollapse={() => setCollapsed((value) => !value)}
       />
       <Box sx={{ flex: 1, minWidth: 0, minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        <ModuleBreadcrumbs />
         <Outlet />
       </Box>
     </Box>
