@@ -1,7 +1,7 @@
 ﻿import { Box } from "@mui/material";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Sidebar, type SidebarEntry } from "../components/common/Sidebar/Sidebar";
+import { Sidebar, type SidebarEntry } from "../../components/common/Sidebar/Sidebar";
 
 export function MarketPerformancePage() {
   const [collapsed, setCollapsed] = useState(false);
