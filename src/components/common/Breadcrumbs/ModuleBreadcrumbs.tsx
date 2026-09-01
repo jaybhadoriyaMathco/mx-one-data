@@ -1,21 +1,6 @@
 import { Box, Link, Typography } from "@mui/material";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-
-const routeLabels: Record<string, string> = {
-  "market-performance": "Market Performance",
-  "market-overview": "Market Overview",
-  "share-volume": "Share & Volume",
-  "pricing-price-index": "Pricing & Price Index",
-  "mars-distribution": "Mars Distribution",
-  "mars-vs-market": "MARS vs Market",
-  "category-sku": "Category & SKU",
-  "brand-channel-mix": "Brand & Channel Mix",
-  "executive-view": "Executive View",
-  "building-blocks": "Building Blocks",
-  "executive": "Executive",
-  performance: "Performance",
-  "fact-vs-fcst": "FACT vs FCST",
-};
+import { ROUTE_LABELS } from "../../../utils/constants";
 
 export function ModuleBreadcrumbs() {
   const location = useLocation();
@@ -35,7 +20,7 @@ export function ModuleBreadcrumbs() {
 
   segments.forEach((segment) => {
     currentPath += `/${segment}`;
-    const label = routeLabels[segment] ?? segment.replace(/-/g, " ");
+    const label = ROUTE_LABELS[segment] ?? segment.replace(/-/g, " ");
     crumbs.push({ label, path: currentPath });
   });
 

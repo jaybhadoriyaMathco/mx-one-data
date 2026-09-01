@@ -95,7 +95,7 @@ export function Sidebar({
           fontWeight: 800,
           letterSpacing: "0.03em",
           textTransform: "uppercase",
-          fontSize: collapsed ? 7 : 14,
+          fontSize: collapsed ? 7 : 12,
           lineHeight: 1.3,
           whiteSpace: collapsed ? "nowrap" : "normal",
         }}
@@ -166,7 +166,7 @@ export function Sidebar({
                         theme.palette.mode === "dark" ? "#BFC7D9" : "#4C4D55",
                   bgcolor: isSelected ? activeBg : "transparent",
                   fontWeight: isSelected ? 700 : 500,
-                  fontSize: collapsed ? 9 : 15,
+                  fontSize: collapsed ? 9 : 13,
                   borderLeft: isSelected ? 3 : 0,
                   borderColor: isSelected ? activeBorder : "transparent",
                   opacity: collapsed ? 0.9 : 1,
@@ -215,7 +215,7 @@ export function Sidebar({
                           textDecoration: "none",
                           px: 1.2,
                           py: 0.8,
-                          fontSize: 14,
+                          fontSize: 12,
                           color: childSelected
                             ? (theme) =>
                                 theme.palette.mode === "dark" ? "#F5F7FF" : activeText

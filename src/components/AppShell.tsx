@@ -3,7 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { NavBar } from "./NavBar";
-import MarketPerformanceFilters from "./common/Filters/GlobalFilters";
+import GlobalFilters from "./common/Filters/GlobalFilters";
 
 export function AppShell() {
   const { user } = useAuth();
@@ -16,7 +16,7 @@ export function AppShell() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", bgcolor: "background.default" }}>
       <NavBar user={user} isDark={isDark} toggleTheme={toggleTheme} />
-      {shouldShowMarketFilters && <MarketPerformanceFilters />}
+      {shouldShowMarketFilters && <GlobalFilters />}
       <Box
         component="main"
         sx={{
