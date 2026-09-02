@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
+import { useState } from "react";
 import ReactECharts from "echarts-for-react";
 import type { EChartsOption, YAXisOption } from "echarts";
 
@@ -35,6 +36,7 @@ interface MultiLineChartProps {
   rightAxis?: AxisConfig;
 
   height?: number;
+  showLegend?: boolean;
 }
 
 interface AxisConfig {
@@ -60,7 +62,26 @@ export function MultiLineChart({
   actionLabel,
   onActionClick,
   height = 280,
+  showLegend = true,
 }: MultiLineChartProps) {
+
+  const [visibleSeries, setVisibleSeries] = useState<Record<string, boolean>>(
+      () =>
+        series.reduce(
+          (acc, item) => {
+            acc[item.name] = true;
+            return acc;
+          },
+          {} as Record<string, boolean>,
+        ),
+    );
+
+    const toggleSeries = (seriesName: string) => {
+      setVisibleSeries((previous) => ({
+        ...previous,
+        [seriesName]: !previous[seriesName],
+      }));
+    };
   const hasRightAxis = series.some(
     (item) => item.yAxisIndex === 1,
   );
@@ -114,20 +135,14 @@ export function MultiLineChart({
 if (hasRightAxis) {
   yAxis.push({
     type: "value",
-
     name: rightAxisName,
-
     position: "right",
-
-    // Vertically center the right axis label
     nameLocation: "middle",
     nameRotate: 270,
     nameGap: 55,
-
     min: rightAxis?.min,
     max: rightAxis?.max,
     interval: rightAxis?.interval,
-
     nameTextStyle: {
       color: "#666",
       fontSize: 12,
@@ -183,8 +198,8 @@ if (hasRightAxis) {
 
     grid: {
       left: 45,
-      right: hasRightAxis ? 55 : 20,
-      top: 25,
+      right: hasRightAxis ? 65 : 20,
+      top: 35,
       bottom: 45,
       containLabel: true,
     },
@@ -215,34 +230,36 @@ if (hasRightAxis) {
 
     yAxis,
 
-    series: series.map((item, index) => ({
-    name: item.name,
-    type: "line" as const,
-    data: item.data,
-    smooth: true,
-    yAxisIndex: item.yAxisIndex ?? 0,
+    series: series
+      .filter((item) => visibleSeries[item.name] !== false)
+      .map((item) => ({
+        name: item.name,
+        type: "line" as const,
+        data: item.data,
+        smooth: true,
+        yAxisIndex: item.yAxisIndex ?? 0,
 
-    lineStyle: {
-        width: 2.5,
-        type: "solid",
-        color: item.color,
-    },
+        lineStyle: {
+          width: 2.5,
+          type: "solid",
+          color: item.color,
+        },
 
-    itemStyle: {
-        color: item.color,
-    },
+        itemStyle: {
+          color: item.color,
+        },
 
-    symbol: "circle",
-    symbolSize: 6,
+        symbol: "circle",
+        symbolSize: 6,
 
-    areaStyle:
-    item.fill === true || item.area === true
-        ? {
-            opacity: 0.16,
-            color: item.color,
-        }
-        : undefined,
-    })),
+        areaStyle:
+          item.fill === true || item.area === true
+            ? {
+                opacity: 0.16,
+                color: item.color,
+              }
+            : undefined,
+      })),
 
     animationDuration: 400,
   };
@@ -364,45 +381,59 @@ if (hasRightAxis) {
         </Box>
       </Box>
 
-      {/* Legend */}
-      <Box
+    {/* Legend */}
+    {showLegend && (
+    <Box
         sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 1.5,
-          mb: 0.5,
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 1.5,
+        mb: 0.5,
         }}
-      >
-        {series.map((item) => (
-          <Box
-            key={item.name}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 0.6,
-            }}
-          >
-            <Box
-            sx={{
-                width: 10,
-                height: 10,
-                borderRadius: "50%",
-                bgcolor: item.color,
-                flexShrink: 0,
-            }}
-            />
+    >
+        {series.map((item) => {
+          const isVisible = visibleSeries[item.name] !== false;
 
-            <Typography
+          return (
+            <Box
+              key={item.name}
+              onClick={() => toggleSeries(item.name)}
               sx={{
-                fontSize: 12,
-                color: "text.secondary",
+                display: "flex",
+                alignItems: "center",
+                gap: 0.6,
+                cursor: "pointer",
+                userSelect: "none",
+                opacity: isVisible ? 1 : 0.55,
+
+                "&:hover": {
+                  opacity: 0.75,
+                },
               }}
             >
-              {item.name}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
+              <Box
+                sx={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  bgcolor: item.color,
+                }}
+              />
+
+              <Typography
+                sx={{
+                  fontSize: 12,
+                  color: "text.secondary",
+                  textDecoration: isVisible ? "none" : "line-through",
+                }}
+              >
+                {item.name}
+              </Typography>
+            </Box>
+          );
+        })}
+    </Box>
+    )}
 
       {/* Chart */}
       <ReactECharts
