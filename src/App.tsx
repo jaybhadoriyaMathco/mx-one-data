@@ -10,17 +10,15 @@ import { ExecutiveViewPage } from "./pages/market-performance/ExecutiveViewPage"
 import { ShareVolumePage } from "./pages/market-performance/market-overview/ShareVolumePage";
 import { PricingPriceIndexPage } from "./pages/market-performance/market-overview/PricingPriceIndexPage";
 import { MarsDistributionPage } from "./pages/market-performance/market-overview/MarsDistributionPage";
+import { MarketOverviewPage } from "./pages/market-performance/market-overview/MarketOverviewPage";
 import { CategorySkuPage } from "./pages/market-performance/mars-vs-market/CategorySkuPage";
+import { BrandChannelMixPage } from "./pages/market-performance/mars-vs-market/BrandChannelMixPage";
+import { MarketVsMarketPage } from "./pages/market-performance/mars-vs-market/MarketVsMarketPage";
 import { FactVsFcstPage } from "./pages/building-blocks/FactvsFcstPage";
 import { ExecutivePage } from "./pages/building-blocks/ExecutivePage";
 import { PerformancePage } from "./pages/building-blocks/PerformancePage";
 
 import { SalesConsolePage } from "./pages/SalesConsolePage";
-import {
-  MarketBrandChannelMixPage,
-  MarketOverviewPage,
-  MarketVsMarketPage,
-} from "./pages/ModuleSubpages";
 
 function App() {
   return (
@@ -54,7 +52,7 @@ function App() {
                 <Route path="mars-vs-market" element={<MarketVsMarketPage />}>
                   <Route index element={<Navigate to="category-sku" replace />} />
                   <Route path="category-sku" element={<CategorySkuPage />} />
-                  <Route path="brand-channel-mix" element={<MarketBrandChannelMixPage />} />
+                  <Route path="brand-channel-mix" element={<BrandChannelMixPage />} />
                 </Route>
               </Route>
 

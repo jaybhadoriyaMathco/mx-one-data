@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import KPICard from "../../../components/common/KPICard/KPICard";
-import { ModuleBreadcrumbs } from "../../../components/common/Breadcrumbs/ModuleBreadcrumbs";
 
 const pageContainerSx = {
   width: "100%",
@@ -23,9 +22,6 @@ export function MarsDistributionPage() {
 
   return (
     <Box sx={pageContainerSx}>
-      {/* Breadcrumb */}
-      <ModuleBreadcrumbs />
-
       {/* Page Header */}
       <Box
         sx={{

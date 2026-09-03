@@ -41,6 +41,7 @@ export function MarketPerformancePage() {
         alignItems: "stretch",
         gap: 2,
         width: "100%",
+        flex: 1,
         height: "100%",
         minHeight: 0,
         pt: 0.25,

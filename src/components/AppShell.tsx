@@ -14,17 +14,18 @@ export function AppShell() {
     location.pathname.startsWith("/building-blocks");
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", bgcolor: "background.default" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", bgcolor: "background.default" }}>
       <NavBar user={user} isDark={isDark} toggleTheme={toggleTheme} />
       {shouldShowMarketFilters && <GlobalFilters />}
       <Box
         component="main"
         sx={{
           flex: 1,
+          height: 0,
           display: "flex",
           flexDirection: "column",
           minHeight: 0,
-          px: { xs: 2, sm: 2.5, xl: 2.75 },
+          // px: { xs: 2, sm: 2.5, xl: 2.75 },
           pt: 1.5,
           pb: 2,
           overflow: "hidden",

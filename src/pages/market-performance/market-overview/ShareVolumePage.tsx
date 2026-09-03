@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import KPICard from "../../../components/common/KPICard/KPICard";
-import { ModuleBreadcrumbs } from "../../../components/common/Breadcrumbs/ModuleBreadcrumbs";
 
 const pageContainerSx = {
   width: "100%",
@@ -21,8 +20,6 @@ export function ShareVolumePage() {
 
   return (
     <Box sx={pageContainerSx}>
-      <ModuleBreadcrumbs />
-
       <Box sx={{ mb: 2.5 }}>
         <Typography
           component="h1"

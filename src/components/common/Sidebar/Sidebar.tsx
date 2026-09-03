@@ -170,7 +170,7 @@ export function Sidebar({
                   borderLeft: isSelected ? 3 : 0,
                   borderColor: isSelected ? activeBorder : "transparent",
                   opacity: collapsed ? 0.9 : 1,
-                  borderRadius: 1,
+                  // borderRadius: 1,
                   "&:hover": {
                     bgcolor: isSelected ? activeBg : "rgba(124, 137, 255, 0.12)",
                     color: isSelected
@@ -225,7 +225,7 @@ export function Sidebar({
                           borderLeft: childSelected ? 3 : 0,
                           borderColor: childSelected ? activeBorder : "transparent",
                           fontWeight: childSelected ? 700 : 500,
-                          borderRadius: 1,
+                          // borderRadius: 1,
                           my: 0.2,
                           "&:hover": {
                             bgcolor: childSelected ? activeBg : "rgba(124, 137, 255, 0.12)",
