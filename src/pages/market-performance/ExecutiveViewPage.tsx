@@ -2,17 +2,21 @@ import { Box, Chip, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-
 import KPICard from "../../components/common/KPICard/KPICard";
 import { ModuleBreadcrumbs } from "../../components/common/Breadcrumbs/ModuleBreadcrumbs";
-import {
-  MultiLineChart,
-  type MultiLineSeries,
-} from "../../components/common/Charts/MultiLineChart";
-
+import { MultiLineChart } from "../../components/common/Charts/MultiLineChart";
 import type { RootState } from "../../store";
-
 import { useNavigate } from "react-router-dom";
+import {
+  monthlyXAxisData,
+  monthlySomSeries,
+  quarterlyXAxisData,
+  quarterlySomSeries,
+  categoryGrowthXAxisData,
+  categoryGrowthSeries,
+  storesSellingXAxis,
+  storesSellingSeries,
+} from "../../utils/constants";
 
 const pageContainerSx = {
   width: "100%",
@@ -29,304 +33,6 @@ const pageContainerSx = {
   borderRadius: 2,
   p: 2,
 };
-
-/* -------------------------------- */
-/* SOM MONTHLY DATA */
-/* -------------------------------- */
-
-const monthlyXAxisData = [
-  "Jul25",
-  "Aug25",
-  "Sep25",
-  "Oct25",
-  "Nov25",
-  "Dec25",
-  "Jan26",
-  "Feb26",
-  "Mar26",
-  "Apr26",
-  "May26",
-  "Jun26",
-];
-
-const monthlySomSeries: MultiLineSeries[] = [
-  {
-    name: "MARS",
-    color: "#182B83",
-    fill:true,
-    data: [
-      40,
-      39,
-      40,
-      40,
-      40,
-      40,
-      40,
-      40,
-      40,
-      40,
-      40,
-      40,
-    ],
-  },
-
-  {
-    name: "Nestlé",
-    color: "#F57C00",
-    fill:true,
-    data: [
-      35,
-      36,
-      35,
-      35,
-      36,
-      36,
-      35,
-      35,
-      36,
-      36,
-      36,
-      35,
-    ],
-  },
-
-  {
-    name: "Malta",
-    color: "#00A9C6",
-    data: [
-      10,
-      10,
-      10,
-      9.5,
-      9.2,
-      9.1,
-      10,
-      9.6,
-      10,
-      9.7,
-      9.1,
-      9.2,
-    ],
-  },
-
-  {
-    name: "ADM",
-    color: "#BC2486",
-    data: [
-      5,
-      5,
-      5,
-      4.8,
-      4.7,
-      4.6,
-      5,
-      4.8,
-      4.9,
-      4.8,
-      4.7,
-      4.6,
-    ],
-  },
-
-  {
-    name: "Total Category growth %",
-    color: "#59606D",
-    fill: true,
-    yAxisIndex: 1,
-    data: [
-      5.5,
-      5.8,
-      6.4,
-      6,
-      5.6,
-      5.9,
-      5.2,
-      5.5,
-      6.1,
-      5.5,
-      5.1,
-      4.9,
-    ],
-  },
-];
-
-/* -------------------------------- */
-/* SOM QUARTERLY DATA */
-/* -------------------------------- */
-
-const quarterlyXAxisData = [
-  "Q1-24",
-  "Q2-24",
-  "Q3-24",
-  "Q4-24",
-  "Q1-25",
-  "Q2-25",
-  "Q3-25",
-  "Q4-25",
-  "Q1-26",
-  "Q2-26",
-];
-
-const quarterlySomSeries: MultiLineSeries[] = [
-  {
-    name: "MARS",
-    color: "#182B83",
-    fill:true,
-    data: [
-      40,
-      39.5,
-      39.2,
-      39.5,
-      39.4,
-      38,
-      38.5,
-      39,
-      39.2,
-      39.5,
-    ],
-  },
-
-  {
-    name: "Nestlé",
-    color: "#F57C00",
-    fill:true,
-    data: [
-      34,
-      34.5,
-      34,
-      35,
-      36,
-      35.5,
-      36,
-      36,
-      36.2,
-      36.5,
-    ],
-  },
-
-  {
-    name: "Malta",
-    color: "#00A9C6",
-    data: [
-      9,
-      9,
-      9,
-      8.8,
-      9,
-      8.8,
-      8.6,
-      8.7,
-      9,
-      8.5,
-    ],
-  },
-
-  {
-    name: "ADM",
-    color: "#BC2486",
-    data: [
-      4.5,
-      4.5,
-      4.4,
-      4.3,
-      4.3,
-      4.2,
-      4.2,
-      4.4,
-      4.3,
-      4.1,
-    ],
-  },
-
-  {
-    name: "Total Category growth %",
-    color: "#59606D",
-    fill:true,
-    dashed: true,
-    yAxisIndex: 1,
-    data: [
-      4.7,
-      5.2,
-      5.2,
-      5.5,
-      5.9,
-      5.7,
-      5.8,
-      5.9,
-      5.4,
-      5,
-    ],
-  },
-];
-
-/* -------------------------------- */
-/* CATEGORY GROWTH DATA */
-/* -------------------------------- */
-
-const categoryGrowthXAxisData = [
-  "P01",
-  "P02",
-  "P03",
-  "P04",
-  "P05",
-  "P06",
-  "P07",
-  "P08",
-  "P09",
-  "P10",
-  "P11",
-  "P12",
-  "P13",
-];
-
-const categoryGrowthSeries: MultiLineSeries[] = [
-  {
-    name: "Value — RSV",
-    color: "#182B83",
-    yAxisIndex: 0,
-    area: true,
-    data: [
-      2.35,
-      2.4,
-      2.48,
-      2.42,
-      2.5,
-      2.6,
-      2.55,
-      2.62,
-      2.58,
-      2.55,
-      2.7,
-      2.85,
-      2.88,
-    ],
-  },
-
-  {
-    name: "Volume (Tons)",
-    color: "#00A9C6",
-    yAxisIndex: 1,
-    data: [
-      45.5,
-      45.8,
-      46.5,
-      46.2,
-      45.6,
-      47.5,
-      46.9,
-      47.3,
-      46.4,
-      46,
-      46.6,
-      47.7,
-      46.8,
-    ],
-  },
-];
-
-/* -------------------------------- */
-/* PAGE */
-/* -------------------------------- */
 
 export function ExecutiveViewPage() {
 
@@ -484,16 +190,7 @@ export function ExecutiveViewPage() {
             fill: true,
 
             data: [
-              { value: 3.6 },
-              { value: 3.8 },
-              { value: 3.9 },
-              { value: 3.7 },
-              { value: 3.4 },
-              { value: 3.8 },
-              { value: 4.2 },
-              { value: 4.5 },
-              { value: 4.4 },
-              { value: 4.1 },
+              { value: 3.6 },{ value: 3.8 },{ value: 3.9 },{ value: 3.7 },{ value: 3.4 },{ value: 3.8 },{ value: 4.2 },{ value: 4.5 },{ value: 4.4 },{ value: 4.1 },
             ],
           }}
         />
@@ -516,16 +213,7 @@ export function ExecutiveViewPage() {
             fill: true,
 
             data: [
-              { value: 4800 },
-              { value: 4920 },
-              { value: 5000 },
-              { value: 5050 },
-              { value: 5100 },
-              { value: 5180 },
-              { value: 5220 },
-              { value: 5260 },
-              { value: 5280 },
-              { value: 5329 },
+              { value: 4800 },{ value: 4920 },{ value: 5000 },{ value: 5050 },{ value: 5100 },{ value: 5180 },{ value: 5220 },{ value: 5260 },{ value: 5280 },{ value: 5329 },
             ],
           }}
         />
@@ -637,6 +325,35 @@ export function ExecutiveViewPage() {
           height={260}
         />
       </Box>
+
+      <Box
+        sx={{
+          mt: 1.75,
+        }}
+      >
+        <MultiLineChart
+          title="Stores Selling Trend"
+          subtitle="P01–P13 · Pedigree Pouch"
+          actionLabel="Mars Distribution →"
+          onActionClick={() => {
+            navigate("/market-performance/market-overview/mars-distribution")
+          }}
+          xAxisData={storesSellingXAxis}
+          xAxisName="Period"
+          leftAxisName="Stores Selling"
+          showLegend={false}
+          leftAxis={{
+            min: 4700,
+            max: 5200,
+            interval: 100,
+            formatter: (value) => value.toLocaleString(),
+          }}
+          series={storesSellingSeries}
+          height={190}
+        />
+      </Box>
+
+      
     </Box>
   );
 }

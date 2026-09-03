@@ -1,6 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import { ModuleBreadcrumbs } from "../../components/common/Breadcrumbs/ModuleBreadcrumbs";
 import { TargetKPICard } from "../../components/common/KPICard/TargetKPICard";
+import { MultiLineChart } from "../../components/common/Charts/MultiLineChart";
+import { BarChart } from "../../components/common/Charts/BarChart";
+import {
+  BUILDING_BLOCKS_CHARTS,
+  PERFECT_STORE_CHANNEL_DATA,
+  FACT_VS_FCST_DATA,
+} from "../../utils/constants";
 
 const pageContainerSx = {
   width: "100%",
@@ -127,15 +134,84 @@ export function ExecutivePage() {
         />
       </Box>
 
-      {/* Future content */}
-      <Box
+    {/* Charts */}
+    <Box
         sx={{
-          mt: 2,
-          minHeight: 250,
+            mt: 2,
+            display: "grid",
+            gridTemplateColumns: {
+            xs: "1fr",
+            lg: "repeat(2, minmax(0, 1fr))",
+            },
+            gap: 1.75,
         }}
-      >
-        {/* Future charts */}
-      </Box>
+        >
+        {/* 1. Perfect Store Compliance by Channel */}
+        <BarChart
+            title={PERFECT_STORE_CHANNEL_DATA.title}
+            xAxisData={PERFECT_STORE_CHANNEL_DATA.xAxisData}
+            xAxisName="Channel"
+            yAxisName="PS %"
+            series={PERFECT_STORE_CHANNEL_DATA.series}
+            height={250}
+        />
+
+        {/* 2. OSA & Shelf (SOS) Trend */}
+        <MultiLineChart
+            title={BUILDING_BLOCKS_CHARTS.osaShelfTrend.title}
+            xAxisData={BUILDING_BLOCKS_CHARTS.osaShelfTrend.xAxisData}
+            xAxisName={BUILDING_BLOCKS_CHARTS.osaShelfTrend.xAxisName}
+            series={BUILDING_BLOCKS_CHARTS.osaShelfTrend.series}
+            leftAxis={{
+            min: BUILDING_BLOCKS_CHARTS.osaShelfTrend.leftAxis.min,
+            max: BUILDING_BLOCKS_CHARTS.osaShelfTrend.leftAxis.max,
+            interval:
+                BUILDING_BLOCKS_CHARTS.osaShelfTrend.leftAxis.interval,
+            formatter:
+                BUILDING_BLOCKS_CHARTS.osaShelfTrend.leftAxis.formatter,
+            }}
+            leftAxisName="%"
+            height={260}
+        />
+
+        {/* 3. Forecast Accuracy vs Bias */}
+        <MultiLineChart
+            title={BUILDING_BLOCKS_CHARTS.forecastAccuracyBias.title}
+            xAxisData={
+            BUILDING_BLOCKS_CHARTS.forecastAccuracyBias.xAxisData
+            }
+            xAxisName={
+            BUILDING_BLOCKS_CHARTS.forecastAccuracyBias.xAxisName
+            }
+            series={
+            BUILDING_BLOCKS_CHARTS.forecastAccuracyBias.series
+            }
+            leftAxis={{
+            min:
+                BUILDING_BLOCKS_CHARTS.forecastAccuracyBias.leftAxis.min,
+            max:
+                BUILDING_BLOCKS_CHARTS.forecastAccuracyBias.leftAxis.max,
+            interval:
+                BUILDING_BLOCKS_CHARTS.forecastAccuracyBias.leftAxis
+                .interval,
+            formatter:
+                BUILDING_BLOCKS_CHARTS.forecastAccuracyBias.leftAxis
+                .formatter,
+            }}
+            leftAxisName="%"
+            height={260}
+        />
+
+        {/* 4. FACT vs FCST */}
+        <BarChart
+            title={FACT_VS_FCST_DATA.title}
+            xAxisData={FACT_VS_FCST_DATA.xAxisData}
+            xAxisName="Period"
+            yAxisName="Units (k)"
+            series={FACT_VS_FCST_DATA.series}
+            height={250}
+        />
+        </Box>
     </Box>
   );
 }
