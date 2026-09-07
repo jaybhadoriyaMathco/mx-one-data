@@ -1,7 +1,8 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import ReactECharts from "echarts-for-react";
-import type { EChartsOption, YAXisOption } from "echarts";
+import type { EChartsOption } from "echarts";
+import type { YAXisOption } from "echarts/types/dist/shared";
 
 export interface MultiLineSeries {
   name: string;
@@ -15,7 +16,8 @@ export interface MultiLineSeries {
 
 interface MultiLineChartProps {
   title: string;
-  subtitle?: string;
+  subtitle?: ReactNode;
+  headerActions?: ReactNode;
 
   xAxisData: string[];
   xAxisName?: string;
@@ -28,6 +30,7 @@ interface MultiLineChartProps {
   tabs?: string[];
   activeTab?: string;
   onTabChange?: (tab: string) => void;
+  tabMinWidth?: number;
 
   actionLabel?: string;
   onActionClick?: () => void;
@@ -49,6 +52,7 @@ interface AxisConfig {
 export function MultiLineChart({
   title,
   subtitle,
+  headerActions,
   leftAxis,
   rightAxis,
   xAxisData,
@@ -59,6 +63,7 @@ export function MultiLineChart({
   tabs,
   activeTab,
   onTabChange,
+  tabMinWidth = 82,
   actionLabel,
   onActionClick,
   height = 280,
@@ -208,6 +213,8 @@ if (hasRightAxis) {
       type: "category",
       data: xAxisData,
 
+      boundaryGap: false,
+
       name: xAxisName,
       nameLocation: "middle",
       nameGap: 30,
@@ -241,7 +248,7 @@ if (hasRightAxis) {
 
         lineStyle: {
           width: 2.5,
-          type: "solid",
+          type: item.dashed ? "dashed" : "solid",
           color: item.color,
         },
 
@@ -344,7 +351,7 @@ if (hasRightAxis) {
                 overflow: "hidden",
               }}
             >
-              {tabs.map((tab) => {
+              {tabs.map((tab, index) => {
                 const isActive = activeTab === tab;
 
                 return (
@@ -352,10 +359,18 @@ if (hasRightAxis) {
                     key={tab}
                     onClick={() => onTabChange?.(tab)}
                     sx={{
-                      minWidth: 82,
+                      minWidth: tabMinWidth,
                       borderRadius: 0,
                       textTransform: "none",
                       fontSize: 12,
+
+                      // separator between toggle buttons
+                      borderLeft:
+                        index === 0
+                          ? "none"
+                          : "1px solid",
+
+                      borderColor: "divider",
 
                       color: isActive
                         ? "#FFFFFF"
@@ -378,6 +393,7 @@ if (hasRightAxis) {
               })}
             </Box>
           )}
+          {headerActions}
         </Box>
       </Box>
 
