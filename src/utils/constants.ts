@@ -15,6 +15,8 @@ export const ROUTE_LABELS: Record<string, string> = {
 };
 import type { MultiLineSeries } from "../components/common/Charts/MultiLineChart";
 
+import type { BarChartSeries } from "../components/common/Charts/BarChart";
+
 /* SOM MONTHLY DATA */
 
 export const monthlyXAxisData = [
@@ -458,3 +460,536 @@ export const FACT_VS_FCST_DATA = {
     },
   ],
 };
+
+export const brandSomXAxisData = [
+  "Jan24",
+  "Apr24",
+  "Jul24",
+  "Oct24",
+  "Jan25",
+  "Apr25",
+  "Jul25",
+  "Oct25",
+  "Jan26",
+  "Apr26",
+  "Jun26",
+];
+
+export const brandSomAllTechSeries = [
+  {
+    name: "Campeon",
+    color: "#84D000",
+    data: [
+      7.6,
+      7.5,
+      7.4,
+      7.5,
+      7.6,
+      7.5,
+      7.6,
+      7.7,
+      7.6,
+      7.5,
+      7.6,
+    ],
+  },
+  {
+    name: "Beneful",
+    color: "#FF7A00",
+    data: [
+      3.4,
+      3.3,
+      3.2,
+      3.3,
+      3.4,
+      3.3,
+      3.2,
+      3.2,
+      3.1,
+      3.1,
+      3.0,
+    ],
+  },
+  {
+    name: "G.Premium",
+    color: "#FFC000",
+    data: [
+      5.0,
+      5.1,
+      5.2,
+      5.2,
+      5.3,
+      5.4,
+      5.3,
+      5.4,
+      5.4,
+      5.3,
+      5.4,
+    ],
+  },
+];
+
+export const brandSomDrySeries = [
+  {
+    name: "Campeon",
+    color: "#84D000",
+    data: [
+      8.1,
+      8.0,
+      7.9,
+      8.0,
+      8.1,
+      8.0,
+      8.1,
+      8.2,
+      8.1,
+      8.0,
+      8.1,
+    ],
+  },
+  {
+    name: "Beneful",
+    color: "#FF7A00",
+    data: [
+      3.8,
+      3.7,
+      3.6,
+      3.7,
+      3.8,
+      3.7,
+      3.6,
+      3.6,
+      3.5,
+      3.5,
+      3.4,
+    ],
+  },
+  {
+    name: "G.Premium",
+    color: "#FFC000",
+    data: [
+      5.5,
+      5.6,
+      5.7,
+      5.7,
+      5.8,
+      5.9,
+      5.8,
+      5.9,
+      5.9,
+      5.8,
+      5.9,
+    ],
+  },
+];
+
+export const brandSomWetSeries = [
+  {
+    name: "Campeon",
+    color: "#84D000",
+    data: [
+      7.6,
+      7.5,
+      7.4,
+      7.5,
+      7.6,
+      7.5,
+      7.6,
+      7.7,
+      7.6,
+      7.5,
+      7.6,
+    ],
+  },
+  {
+    name: "Beneful",
+    color: "#FF7A00",
+    data: [
+      3.4,
+      3.3,
+      3.2,
+      3.3,
+      3.4,
+      3.3,
+      3.2,
+      3.2,
+      3.1,
+      3.1,
+      3.0,
+    ],
+  },
+  {
+    name: "G.Premium",
+    color: "#FFC000",
+    data: [
+      5.0,
+      5.1,
+      5.2,
+      5.2,
+      5.3,
+      5.4,
+      5.3,
+      5.4,
+      5.4,
+      5.3,
+      5.4,
+    ],
+  },
+];
+
+export const breedSizeXAxisData = [
+  "Med & Large",
+  "Small",
+];
+
+export const marsBreedSizeMixSeries = [
+  {
+    name: "MARS Mix",
+    color: "#1000B5",
+    data: [81, 17],
+  },
+];
+
+export const marketBreedSizeMixSeries = [
+  {
+    name: "Market Mix",
+    color: "#BC2486",
+    data: [77, 18],
+  },
+];
+
+export const breedSizeIndexSeries = [
+  {
+    name: "Index",
+    color: "#FF1717",
+    data: [105, 100],
+  },
+];
+
+// PRICING & PRICE INDEX
+
+export const pricingWeeklyXAxisData = [
+  "W1",
+  "W2",
+  "W3",
+  "W4",
+];
+
+
+export const dogDryPriceSeries = [
+  {
+    name: "Pedigree AD Res",
+    color: "#1000B5",
+    data: [960, 980, 970, 974],
+  },
+  {
+    name: "Pedigree SB Beef",
+    color: "#C2268E",
+    data: [825, 828, 830, 832],
+  },
+  {
+    name: "Whiskas",
+    color: "#84D000",
+    data: [538, 535, 538, 543],
+  },
+  {
+    name: "Minimo",
+    color: "#00C7E5",
+    data: [745, 638, 628, 738],
+  },
+];
+
+export const dogWetPriceSeries = [
+  {
+    name: "Pedigree AD Res",
+    color: "#1000B5",
+    data: [785, 792, 788, 795],
+  },
+  {
+    name: "Pedigree SB Beef",
+    color: "#C2268E",
+    data: [690, 700, 705, 710],
+  },
+  {
+    name: "Whiskas",
+    color: "#84D000",
+    data: [510, 515, 512, 520],
+  },
+  {
+    name: "Minimo",
+    color: "#00C7E5",
+    data: [625, 615, 620, 630],
+  },
+];
+
+
+
+export const catDryPriceSeries = [
+  {
+    name: "Pedigree AD Res",
+    color: "#1000B5",
+    data: [610, 618, 620, 625],
+  },
+  {
+    name: "Pedigree SB Beef",
+    color: "#C2268E",
+    data: [565, 570, 575, 580],
+  },
+  {
+    name: "Whiskas",
+    color: "#84D000",
+    data: [545, 550, 548, 555],
+  },
+  {
+    name: "Minimo",
+    color: "#00C7E5",
+    data: [515, 520, 518, 525],
+  },
+];
+
+
+export const catWetPriceSeries = [
+  {
+    name: "Pedigree AD Res",
+    color: "#1000B5",
+    data: [720, 725, 730, 735],
+  },
+  {
+    name: "Pedigree SB Beef",
+    color: "#C2268E",
+    data: [650, 648, 655, 660],
+  },
+  {
+    name: "Whiskas",
+    color: "#84D000",
+    data: [580, 585, 590, 595],
+  },
+  {
+    name: "Minimo",
+    color: "#00C7E5",
+    data: [540, 545, 550, 558],
+  },
+];
+
+
+export const priceIndexManufacturerXAxisData = [
+  "MARS",
+  "Nestlé",
+  "Malta",
+];
+
+export const priceIndexCompetitorSeries = [
+  {
+    name: "Price Index",
+    color: "#1000B5",
+
+    colors: [
+      "#1000B5",
+      "#FF7A00",
+      "#00C7E5",
+    ],
+
+    data: [
+      100,
+      88,
+      78,
+    ],
+  },
+];
+
+
+export const priceRangeSubChannelXAxisData = [
+  "WHS",
+  "C&C",
+  "Other SS",
+];
+
+export const priceRangeSubChannelSeries = [
+  {
+    name: "MARS",
+    color: "#1000B5",
+    data: [
+      825,
+      805,
+      845,
+    ],
+  },
+  {
+    name: "Market",
+    color: "#BDBDBD",
+    data: [
+      730,
+      715,
+      755,
+    ],
+  },
+];
+
+
+export const priceTrendXAxisData = [
+  "P01 2025",
+  "P02 2025",
+  "P03 2025",
+  "P04 2025",
+  "P05 2025",
+  "P06 2025",
+  "P07 2025",
+  "P08 2025",
+  "P09 2025",
+  "P10 2025",
+  "P11 2025",
+  "P12 2025",
+  "P13 2025",
+];
+
+export const priceTrendSeries = [
+  {
+    name: "Campeon Kilo",
+    color: "#1010B5",
+
+    data: [
+      17,
+      15,
+      17,
+      18,
+      17.5,
+      16,
+      17.5,
+      16.8,
+      18,
+      18.5,
+      15.8,
+      15.2,
+      16.2,
+    ],
+  },
+
+  {
+    name: "Cat Chow Kilo",
+    color: "#FF7A00",
+
+    data: [
+      35,
+      34,
+      35.5,
+      37.5,
+      34,
+      35,
+      38,
+      34.5,
+      35.5,
+      35.5,
+      34,
+      35,
+      37.5,
+    ],
+  },
+
+  {
+    name: "Cat Chow Pre Kilo",
+    color: "#00C7E5",
+
+    data: [
+      43,
+      43,
+      46,
+      42,
+      43.5,
+      43.5,
+      42.8,
+      43,
+      45,
+      45.2,
+      42.5,
+      44.5,
+      45,
+    ],
+  },
+
+  {
+    name: "Champ Kilo",
+    color: "#C2268E",
+
+    data: [
+      51,
+      52.5,
+      52.8,
+      53,
+      52,
+      51.8,
+      53.8,
+      52,
+      52.8,
+      53,
+      51.2,
+      52,
+      52.5,
+    ],
+  },
+
+  {
+    name: "Dog Chow Adult Kilo",
+    color: "#93D500",
+
+    data: [
+      18,
+      18.7,
+      19.2,
+      19.5,
+      19,
+      18.5,
+      19.8,
+      20,
+      17.5,
+      18.8,
+      17.5,
+      18,
+      19.2,
+    ],
+  },
+
+  {
+    name: "Dog Chow Adult Pre Kilo",
+    color: "#FF2121",
+
+    data: [
+      32.5,
+      32.5,
+      34.5,
+      33.5,
+      34,
+      32.5,
+      34,
+      33,
+      34,
+      35,
+      32.5,
+      35.5,
+      33.5,
+    ],
+  },
+];
+
+
+export const categoryOverviewXAxisData: string[] = [
+  "MARS",
+  "Nestlé",
+  "Malta",
+  "ADM",
+];
+
+export const categoryOverviewSeries: BarChartSeries[] = [
+  {
+    name: "Value",
+    data: [5400, 4300, 1700, 1000], // Value ($000 MXN) — replace with real data
+    color: "#0000A8",               // fallback color
+    colors: ["#0000A8", "#FF8000", "#1FC6DB", "#C2187B"], // per-bar: MARS, Nestlé, Malta, ADM
+    barLabels: [
+      { text: "▲ +7.2%", color: "#43A047" },
+      { text: "▲ +6.1%", color: "#43A047" },
+      { text: "▼ -1.1%", color: "#E53935" },
+      { text: "▲ +3.2%", color: "#43A047" },
+    ],
+  },
+];
+

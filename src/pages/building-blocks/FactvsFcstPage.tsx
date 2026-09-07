@@ -1,8 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-
 import KPICard from "../../components/common/KPICard/KPICard";
 import { ModuleBreadcrumbs } from "../../components/common/Breadcrumbs/ModuleBreadcrumbs";
+import { MultiLineChart } from "../../components/common/Charts/MultiLineChart";
+import {
+  priceTrendXAxisData,
+  priceTrendSeries,
+} from "../../utils/constants";
 
 const pageContainerSx = {
   width: "100%",
@@ -128,14 +132,44 @@ export function FactVsFcstPage() {
         />
         </Box>
 
-      {/* Future FACT vs FCST content */}
-      <Box
-        sx={{
-          mt: 2,
-          minHeight: 250,
-        }}
-      >
-        {/* FACT vs FCST charts and tables*/}
+      {/* PRICE ANALYSIS */}
+      <Box sx={{ mt: 2 }}>
+        <Typography
+          sx={{
+            fontSize: 16,
+            fontWeight: 600,
+          }}
+        >
+          Price Analysis
+        </Typography>
+
+        <Typography
+          sx={{
+            mt: 0.4,
+            mb: 1,
+            fontSize: 12,
+            color: "text.secondary",
+          }}
+        >
+          Average price trend, then by-product detail
+        </Typography>
+
+        <MultiLineChart
+          title="Price Trend"
+          subtitle="Average price by period · 13 × 28-day periods"
+          xAxisData={priceTrendXAxisData}
+          xAxisName="Period"
+          series={priceTrendSeries}
+          leftAxisName="Avg Price ($)"
+          leftAxis={{
+            min: 10,
+            max: 55,
+            interval: 10,
+            formatter: (value) =>
+              `$${value}`,
+          }}
+          height={260}
+        />
       </Box>
     </Box>
   );
