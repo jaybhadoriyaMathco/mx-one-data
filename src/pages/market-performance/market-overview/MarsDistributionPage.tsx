@@ -32,6 +32,24 @@ const ALCANCES_VALUES = [50, 77, 75, 69, 52, 74];
 
 const RETAILERS = ["Chedraui", "Calimax", "Walmart/Bodega"];
 
+const DropdownArrow = () => (
+  <Box
+    component="span"
+    sx={{
+      position: "absolute",
+      right: 10,
+      top: "50%",
+      transform: "translateY(-50%)",
+      width: 0,
+      height: 0,
+      borderLeft: "4px solid transparent",
+      borderRight: "4px solid transparent",
+      borderTop: "5px solid #555",
+      pointerEvents: "none",
+    }}
+  />
+);
+
 const pageContainerSx = {
   width: "100%",
   height: "100%",
@@ -164,30 +182,48 @@ export function MarsDistributionPage() {
           tabMinWidth={58}
           showLegend={false}
           headerActions={
-            <select
-              value={selectedSku}
-              onChange={(event) => setSelectedSku(event.target.value)}
-              style={{
-                height: "30px",
-                minWidth: "150px",
-                padding: "0 28px 0 12px",
-                borderRadius: "6px",
-                border: "1px solid #1A237E",
-                backgroundColor: "#FFFFFF",
-                color: "#111111",
-                fontSize: "12px",
-                cursor: "pointer",
-                outline: "none",
+            <Box
+              sx={{
+                position: "relative",
+                display: "inline-flex",
+                alignItems: "center",
               }}
             >
-              {MARS_DISTRIBUTION_TREND_CHART.skuOptions.map(
-                (sku) => (
+              <Box
+                component="select"
+                value={selectedSku}
+                onChange={(event) => setSelectedSku(event.target.value)}
+                sx={{
+                  height: 30,
+                  minWidth: 150,
+                  px: 1.5,
+                  pr: 4,
+                  borderRadius: "6px",
+                  border: "1px solid #1A237E",
+                  backgroundColor: "#FFFFFF",
+                  color: "#111111",
+                  fontSize: 12,
+                  cursor: "pointer",
+                  outline: "none",
+
+                  appearance: "none",
+                  WebkitAppearance: "none",
+                  MozAppearance: "none",
+
+                  "&:focus": {
+                    borderColor: "#1A237E",
+                  },
+                }}
+              >
+                {MARS_DISTRIBUTION_TREND_CHART.skuOptions.map((sku) => (
                   <option key={sku} value={sku}>
                     {sku}
                   </option>
-                ),
-              )}
-            </select>
+                ))}
+              </Box>
+
+              <DropdownArrow />
+            </Box>
           }
           height={300}
         />
