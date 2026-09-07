@@ -1,7 +1,12 @@
 import { Box, SvgIcon, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { useState } from "react";
 import KPICard from "../../../components/common/KPICard/KPICard";
 import { BarChart } from "../../../components/common/Charts/BarChart";
+import { MultiLineChart } from "../../../components/common/Charts/MultiLineChart";
+import {
+  MARS_DISTRIBUTION_TREND_CHART,
+} from "../../../utils/constants";
 
 const InfoOutlinedIcon = (props: any) => (
   <SvgIcon viewBox="0 0 24 24" aria-hidden="true" {...props}>
@@ -41,6 +46,14 @@ const pageContainerSx = {
 
 export function MarsDistributionPage() {
   const theme = useTheme();
+
+  const [activeTrendTab, setActiveTrendTab] = useState(
+    MARS_DISTRIBUTION_TREND_CHART.activeTab,
+  );
+
+  const [selectedSku, setSelectedSku] = useState(
+    MARS_DISTRIBUTION_TREND_CHART.defaultSku,
+  );
 
   return (
     <Box sx={pageContainerSx}>
@@ -84,6 +97,99 @@ export function MarsDistributionPage() {
           value="$32M"
           accentColor={theme.palette.mode === "dark" ? "#E060C0" : "#BC2486"}
           comparison={{ status: "positive", value: "+13%", text: "vs LY" }}
+        />
+      </Box>
+
+      <Box sx={{ mt: 2 }}>
+        <MultiLineChart
+          title={MARS_DISTRIBUTION_TREND_CHART.title}
+          subtitle={
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.75,
+                flexWrap: "wrap",
+              }}
+            >
+              <Typography
+                component="span"
+                sx={{
+                  fontSize: 12,
+                  color: "text.secondary",
+                }}
+              >
+                {MARS_DISTRIBUTION_TREND_CHART.subtitle}
+              </Typography>
+
+              <Box
+                component="span"
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  px: 1,
+                  py: 0.25,
+                  borderRadius: 2,
+                  border: "1px solid #F2C46D",
+                  bgcolor: "#FFF8E8",
+                  color: "#9A6700",
+                  fontSize: 11,
+                  fontWeight: 600,
+                }}
+              >
+                Grain TBC: SKU vs category vs segment
+              </Box>
+            </Box>
+          }
+          xAxisData={MARS_DISTRIBUTION_TREND_CHART.xAxisData}
+          xAxisName={MARS_DISTRIBUTION_TREND_CHART.xAxisName}
+          series={MARS_DISTRIBUTION_TREND_CHART.series}
+          leftAxis={{
+            min: MARS_DISTRIBUTION_TREND_CHART.leftAxis.min,
+            max: MARS_DISTRIBUTION_TREND_CHART.leftAxis.max,
+            interval: MARS_DISTRIBUTION_TREND_CHART.leftAxis.interval,
+            formatter: MARS_DISTRIBUTION_TREND_CHART.leftAxis.formatter,
+          }}
+          rightAxis={{
+            min: MARS_DISTRIBUTION_TREND_CHART.rightAxis.min,
+            max: MARS_DISTRIBUTION_TREND_CHART.rightAxis.max,
+            interval: MARS_DISTRIBUTION_TREND_CHART.rightAxis.interval,
+            formatter: MARS_DISTRIBUTION_TREND_CHART.rightAxis.formatter,
+          }}
+          leftAxisName="ROS (units/store)"
+          rightAxisName="Stores Selling"
+          tabs={MARS_DISTRIBUTION_TREND_CHART.tabs}
+          activeTab={activeTrendTab}
+          onTabChange={setActiveTrendTab}
+          tabMinWidth={58}
+          showLegend={false}
+          headerActions={
+            <select
+              value={selectedSku}
+              onChange={(event) => setSelectedSku(event.target.value)}
+              style={{
+                height: "30px",
+                minWidth: "150px",
+                padding: "0 28px 0 12px",
+                borderRadius: "6px",
+                border: "1px solid #1A237E",
+                backgroundColor: "#FFFFFF",
+                color: "#111111",
+                fontSize: "12px",
+                cursor: "pointer",
+                outline: "none",
+              }}
+            >
+              {MARS_DISTRIBUTION_TREND_CHART.skuOptions.map(
+                (sku) => (
+                  <option key={sku} value={sku}>
+                    {sku}
+                  </option>
+                ),
+              )}
+            </select>
+          }
+          height={300}
         />
       </Box>
 

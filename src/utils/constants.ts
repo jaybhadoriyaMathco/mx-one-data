@@ -981,9 +981,9 @@ export const categoryOverviewXAxisData: string[] = [
 export const categoryOverviewSeries: BarChartSeries[] = [
   {
     name: "Value",
-    data: [5400, 4300, 1700, 1000], // Value ($000 MXN) — replace with real data
-    color: "#0000A8",               // fallback color
-    colors: ["#0000A8", "#FF8000", "#1FC6DB", "#C2187B"], // per-bar: MARS, Nestlé, Malta, ADM
+    data: [5400, 4300, 1700, 1000], 
+    color: "#0000A8",               
+    colors: ["#0000A8", "#FF8000", "#1FC6DB", "#C2187B"], 
     barLabels: [
       { text: "▲ +7.2%", color: "#43A047" },
       { text: "▲ +6.1%", color: "#43A047" },
@@ -993,3 +993,99 @@ export const categoryOverviewSeries: BarChartSeries[] = [
   },
 ];
 
+
+export const MARS_DISTRIBUTION_TREND_CHART = {
+  title: "ROS & Distribution Trend",
+
+  subtitle: "P01–P13 2025",
+
+  tabs: ["RSV", "Vol"],
+
+  activeTab: "Vol",
+
+  skuOptions: [
+    "All SKUs",
+    "Pedigree Pouch",
+    "Whiskas",
+  ],
+
+  defaultSku: "Pedigree Pouch",
+
+  xAxisData: [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13",
+  ],
+
+  xAxisName: "Period",
+
+  leftAxis: {
+    min: 315,
+    max: 365,
+    interval: 10,
+    formatter: (value: number) => `${value}`,
+  },
+
+  rightAxis: {
+    min: 4700,
+    max: 5000,
+    interval: 100,
+    formatter: (value: number) =>
+      value.toLocaleString("en-US"),
+  },
+
+  series: [
+    {
+      name: "ROS",
+      data: [
+        320,
+        324,
+        327,
+        333,
+        322,
+        360,
+        344,
+        335,
+        328,
+        323,
+        331,
+        354,
+        358,
+      ],
+      color: "#0808A8",
+      fill: true,
+      yAxisIndex: 0,
+    },
+
+    {
+      name: "Stores Selling",
+      data: [
+        4705,
+        4710,
+        4720,
+        4740,
+        4780,
+        4820,
+        4890,
+        4930,
+        4970,
+        4975,
+        4960,
+        4980,
+        5000,
+      ],
+      color: "#00CFEF",
+      yAxisIndex: 1,
+    },
+  ],
+};
