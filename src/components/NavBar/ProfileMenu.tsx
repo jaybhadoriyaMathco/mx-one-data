@@ -13,12 +13,13 @@ export function ProfileMenu({ user, isDark, toggleTheme }: ProfileMenuProps) {
       <Box
         sx={{
           px: 1.5,
-          py: 2.25,
+          py: 1.5,
           borderBottom: 1,
           borderColor: "divider",
           fontWeight: 700,
-          color: "#8A8A8A",
+          color: isDark ? "#E7E7F0" : "#555555",
           fontSize: 12,
+          letterSpacing: "0.02em",
         }}
       >
         {user.name} · {user.role}
@@ -69,7 +70,7 @@ function ProfileRow({
       sx={{
         display: "flex",
         alignItems: "center",
-        minHeight: 54,
+        minHeight: 52,
         px: 1.15,
         gap: 0.5,
         borderBottom: 1,
@@ -78,7 +79,9 @@ function ProfileRow({
           ? "error.main"
           : disabled
             ? "text.secondary"
-            : "text.primary",
+            : isDark
+              ? "#D9D9E6"
+              : "#2D2D35",
         opacity: disabled && !danger ? 0.82 : 1,
       }}
     >
@@ -86,12 +89,13 @@ function ProfileRow({
         sx={{
           display: "inline-flex",
           width: 22,
-          "& svg": { width: 19, height: 19 },
+          justifyContent: "center",
+          "& svg": { width: 18, height: 18 },
         }}
       >
         {icon}
       </Box>
-      <Box sx={{ flex: 1, fontSize: 13, minWidth: 0, color: !isDark ? "#3C3C3C" : "#B4B4BE" }}>{label}</Box>
+      <Box sx={{ flex: 1, fontSize: 13, minWidth: 0, fontWeight: 500, color: isDark ? "#DDE3F0" : "#2D2D35" }}>{label}</Box>
       <Box sx={{ display: "flex", gap: 0.5, ml: "auto" }}>{children}</Box>
     </Box>
   );
@@ -115,19 +119,20 @@ function ProfileOption({
       sx={{
         minWidth: 42,
         px: 0.5,
-        py: 0.75,
+        py: 0.7,
         border: 0,
         borderRadius: 0.75,
         bgcolor: active ? "primary.main" : "action.hover",
         color: active ? "common.white" : "text.secondary",
         font: "inherit",
         fontSize: 11,
-        fontWeight: 600,
+        fontWeight: 700,
         textAlign: "center",
         cursor: onClick ? "pointer" : "default",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        lineHeight: 1.2,
       }}
     >
       {label}

@@ -1,7 +1,18 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import { ModuleBreadcrumbs } from "../../components/common/Breadcrumbs/ModuleBreadcrumbs";
 import { TargetKPICard } from "../../components/common/KPICard/TargetKPICard";
+import { StandardTable } from "../../components/common/Tables/StandardTable";
+import { TableSegmentedControl } from "../../components/common/TableFilters/TableSegmentedControl";
+import { useState } from "react";
+import {
+  deltaColumns,
+  deltaColumnGroups,
+  deltaRows,
+  skuPerformanceColumns,
+  skuPerformanceGroups,
+  skuPerformanceRows,
+} from "../../utils/tableData";
 
 const pageContainerSx = {
   width: "100%",
@@ -18,6 +29,9 @@ const pageContainerSx = {
 };
 
 export function PerformancePage() {
+  const [grouping, setGrouping] = useState<"SKU" | "Product Family" | "Brand">("SKU");
+  const [cut, setCut] = useState<"By Chain" | "By Nielsen Area">("By Chain");
+
   return (
     <Box sx={pageContainerSx}>
       {/* Breadcrumb */}
@@ -132,6 +146,44 @@ export function PerformancePage() {
           varianceStatus="negative"
           progress={90}
           accentColor="#76B900"
+        />
+      </Box>
+
+      <Box sx={{ mt: 2 }}>
+        <StandardTable
+          title="Delta Matrix"
+          subtitle="Period-over-period change (Tons) by channel"
+          columns={deltaColumns}
+          columnGroups={deltaColumnGroups}
+          rows={deltaRows}
+          maxHeight={440}
+          compact
+        />
+      </Box>
+
+      <Box sx={{ mt: 2 }}>
+        <StandardTable
+          title="SKU Performance Matrix — 4+5CO pollo"
+          subtitle={`${cut} · ${grouping} · 4+5CO pollo · P05 2026 · vs LP / vs Target`}
+          columns={skuPerformanceColumns}
+          columnGroups={skuPerformanceGroups}
+          rows={skuPerformanceRows}
+          headerActions={
+            <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+              <TableSegmentedControl
+                options={["SKU", "Product Family", "Brand"] as const}
+                value={grouping}
+                onChange={setGrouping}
+              />
+              <TableSegmentedControl
+                options={["By Chain", "By Nielsen Area"] as const}
+                value={cut}
+                onChange={setCut}
+              />
+            </Box>
+          }
+          maxHeight={460}
+          compact
         />
       </Box>
     </Box>

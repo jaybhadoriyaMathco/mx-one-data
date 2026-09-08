@@ -45,11 +45,6 @@ export function Sidebar({
   const location = useLocation();
 
   const sidebarWidth = collapsed ? 46 : 220;
-  const lightBg = "#FFFFFF";
-  const darkBg = "linear-gradient(180deg, #101018 0%, #0D0D14 100%)";
-  const activeBg = "rgba(76, 109, 232, 0.16)";
-  const activeBorder = "#4C6DE8";
-  const activeText = "#1F2A44";
 
   return (
     <Box
@@ -65,18 +60,22 @@ export function Sidebar({
         borderRadius: 1,
         overflow: "hidden",
         bgcolor: (theme) =>
-          theme.palette.mode === "dark" ? darkBg : lightBg,
+          theme.palette.mode === "dark" ? "#121722" : "#FFFFFF",
         color: (theme) =>
-          theme.palette.mode === "dark" ? "common.white" : "text.primary",
+          theme.palette.mode === "dark" ? "#EEF2FF" : "text.primary",
         borderRight: "1px solid",
         borderRightColor: (theme) =>
           theme.palette.mode === "dark"
-            ? "rgba(255,255,255,0.09)"
+            ? "rgba(255,255,255,0.08)"
             : "rgba(0,0,0,0.08)",
         boxSizing: "border-box",
         padding: "12px 0",
         margin: 0,
         transition: "width 0.25s ease",
+        boxShadow: (theme) =>
+          theme.palette.mode === "dark"
+            ? "inset 0 1px 0 rgba(255,255,255,0.04)"
+            : "inset 0 1px 0 rgba(15,23,42,0.02)",
       }}
     >
       <Box
@@ -93,7 +92,7 @@ export function Sidebar({
               ? "rgba(255,255,255,0.08)"
               : "rgba(0,0,0,0.08)",
           fontWeight: 800,
-          letterSpacing: "0.03em",
+          letterSpacing: "0.08em",
           textTransform: "uppercase",
           fontSize: collapsed ? 7 : 12,
           lineHeight: 1.3,
@@ -111,10 +110,12 @@ export function Sidebar({
             borderRadius: 1,
             ml: collapsed ? 0 : 1,
             border: 1,
-            borderColor: "rgba(255,255,255,0.2)",
+            borderColor: (theme) =>
+              theme.palette.mode === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)",
             bgcolor: (theme) =>
-              theme.palette.mode === "dark" ? "#171D2A" : "#E7E7E8",
-            color: "text.primary",
+              theme.palette.mode === "dark" ? "#1A2333" : "#E7E7E8",
+            color: (theme) =>
+              theme.palette.mode === "dark" ? "#F5F7FF" : "text.primary",
             padding: 0,
             "&:hover": {
               bgcolor: (theme) =>
@@ -161,21 +162,27 @@ export function Sidebar({
                   textDecoration: "none",
                   color: isSelected
                     ? (theme) =>
-                        theme.palette.mode === "dark" ? "#F5F7FF" : activeText
+                        theme.palette.mode === "dark" ? "#F5F7FF" : "#1F2A44"
                     : (theme) =>
-                        theme.palette.mode === "dark" ? "#BFC7D9" : "#4C4D55",
-                  bgcolor: isSelected ? activeBg : "transparent",
+                        theme.palette.mode === "dark" ? "#C4CCDA" : "#4C4D55",
+                  bgcolor: isSelected
+                    ? (theme) =>
+                        theme.palette.mode === "dark" ? "rgba(96,96,255,0.18)" : "rgba(76,109,232,0.12)"
+                    : "transparent",
                   fontWeight: isSelected ? 700 : 500,
                   fontSize: collapsed ? 9 : 13,
                   borderLeft: isSelected ? 3 : 0,
-                  borderColor: isSelected ? activeBorder : "transparent",
+                  borderColor: isSelected ? "#4C6DE8" : "transparent",
                   opacity: collapsed ? 0.9 : 1,
-                  // borderRadius: 1,
+                  transition: "background 0.15s ease, color 0.15s ease",
                   "&:hover": {
-                    bgcolor: isSelected ? activeBg : "rgba(124, 137, 255, 0.12)",
+                    bgcolor: isSelected
+                      ? (theme) =>
+                          theme.palette.mode === "dark" ? "rgba(96,96,255,0.2)" : "rgba(76,109,232,0.16)"
+                      : "rgba(124, 137, 255, 0.12)",
                     color: isSelected
                       ? (theme) =>
-                          theme.palette.mode === "dark" ? "#F5F7FF" : activeText
+                          theme.palette.mode === "dark" ? "#F5F7FF" : "#1F2A44"
                       : (theme) =>
                           theme.palette.mode === "dark" ? "#F5F7FF" : "#171717",
                   },
@@ -218,20 +225,26 @@ export function Sidebar({
                           fontSize: 12,
                           color: childSelected
                             ? (theme) =>
-                                theme.palette.mode === "dark" ? "#F5F7FF" : activeText
+                                theme.palette.mode === "dark" ? "#F5F7FF" : "#1F2A44"
                             : (theme) =>
-                                theme.palette.mode === "dark" ? "#BFC7D9" : "#4C4D55",
-                          bgcolor: childSelected ? activeBg : "transparent",
+                                theme.palette.mode === "dark" ? "#C4CCDA" : "#4C4D55",
+                          bgcolor: childSelected
+                            ? (theme) =>
+                                theme.palette.mode === "dark" ? "rgba(96,96,255,0.18)" : "rgba(76,109,232,0.12)"
+                            : "transparent",
                           borderLeft: childSelected ? 3 : 0,
-                          borderColor: childSelected ? activeBorder : "transparent",
+                          borderColor: childSelected ? "#4C6DE8" : "transparent",
                           fontWeight: childSelected ? 700 : 500,
-                          // borderRadius: 1,
                           my: 0.2,
+                          transition: "background 0.15s ease, color 0.15s ease",
                           "&:hover": {
-                            bgcolor: childSelected ? activeBg : "rgba(124, 137, 255, 0.12)",
+                            bgcolor: childSelected
+                              ? (theme) =>
+                                  theme.palette.mode === "dark" ? "rgba(96,96,255,0.2)" : "rgba(76,109,232,0.16)"
+                              : "rgba(124, 137, 255, 0.12)",
                             color: childSelected
                               ? (theme) =>
-                                  theme.palette.mode === "dark" ? "#F5F7FF" : activeText
+                                  theme.palette.mode === "dark" ? "#F5F7FF" : "#1F2A44"
                               : (theme) =>
                                   theme.palette.mode === "dark" ? "#F5F7FF" : "#171717",
                           },

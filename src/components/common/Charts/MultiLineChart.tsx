@@ -2,7 +2,9 @@ import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import ReactECharts from "echarts-for-react";
-import type { EChartsOption, YAXisOption } from "echarts";
+import type { EChartsOption } from "echarts";
+
+type YAxisOption = Exclude<NonNullable<EChartsOption["yAxis"]>, readonly unknown[]>;
 
 export interface MultiLineSeries {
   name: string;
@@ -131,7 +133,7 @@ export function MultiLineChart({
     return darkModeColors[color.toUpperCase()] ?? color;
   };
 
-  const yAxis: YAXisOption[] = [
+  const yAxis: YAxisOption[] = [
     {
       type: "value",
 

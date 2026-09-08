@@ -14,12 +14,13 @@ export function NavBar({ user, isDark, toggleTheme }: NavBarProps) {
     <Box
       component="header"
       sx={{
-        minHeight: 50,
+        minHeight: 54,
         display: "flex",
         alignItems: "stretch",
         flexWrap: { xs: "wrap", sm: "nowrap" },
-        bgcolor: "#FF1414",
+        bgcolor: "#E3191B",
         color: "common.white",
+        boxShadow: "inset 0 -1px 0 rgba(255,255,255,0.14)",
       }}
     >
       <NavBarLogo />

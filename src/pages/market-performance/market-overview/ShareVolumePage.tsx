@@ -4,6 +4,8 @@ import { useTheme } from "@mui/material/styles";
 import KPICard from "../../../components/common/KPICard/KPICard";
 import { MultiLineChart } from "../../../components/common/Charts/MultiLineChart";
 import { BarChart } from "../../../components/common/Charts/BarChart";
+import { StandardTable } from "../../../components/common/Tables/StandardTable";
+import { TableSegmentedControl } from "../../../components/common/TableFilters/TableSegmentedControl";
 import {
   brandSomXAxisData,
   brandSomAllTechSeries,
@@ -14,6 +16,7 @@ import {
   marketBreedSizeMixSeries,
   breedSizeIndexSeries,
 } from "../../../utils/constants";
+import { salesSomColumns, salesSomRows, salesRsvRows } from "../../../utils/tableData";
 
 const pageContainerSx = {
   width: "100%",
@@ -29,6 +32,7 @@ const pageContainerSx = {
 
 export function ShareVolumePage() {
   const theme = useTheme();
+  const [tableMetric, setTableMetric] = useState<"SOM %" | "Sales (RSV)">("SOM %");
 
   const [brandView, setBrandView] =
     useState<"All Tech" | "Dry" | "Wet">("All Tech");
@@ -412,6 +416,26 @@ export function ShareVolumePage() {
           }
           tabMinWidth={56}
           height={260}
+        />
+      </Box>
+
+      <Box sx={{ mt: 2 }}>
+        <StandardTable
+          title="Sales & SOM by Cut — Full Matrix"
+          subtitle={tableMetric === "SOM %"
+            ? "Share of Market (%) by category, channel and sub-channel · leader highlighted"
+            : "Sales / RSV ($) by category, channel and sub-channel · leader highlighted"}
+          columns={salesSomColumns}
+          rows={tableMetric === "SOM %" ? salesSomRows : salesRsvRows}
+          headerActions={
+            <TableSegmentedControl
+              options={["SOM %", "Sales (RSV)"] as const}
+              value={tableMetric}
+              onChange={setTableMetric}
+            />
+          }
+          maxHeight={520}
+          compact
         />
       </Box>
     </Box>

@@ -31,7 +31,9 @@ export function NavBarActions({ user, isDark, toggleTheme }: NavBarActionsProps)
               color: "common.white",
               width: { xs: 32, xl: 38 },
               height: { xs: 32, xl: 38 },
-              borderRadius: 3,
+              borderRadius: 2,
+              bgcolor: isDark ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.06)",
+              "&:hover": { bgcolor: isDark ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.12)" },
               "& svg": { width: 17, height: 17 },
             }}
           >
@@ -75,13 +77,14 @@ export function NavBarActions({ user, isDark, toggleTheme }: NavBarActionsProps)
           py: { xs: 0.5, md: 0.75, lg: 1 },
           ml: { xs: 0.5, sm: 1, md: 1, xl: 2 },
           border: 0,
-          borderRadius: 0.5,
-          bgcolor: "rgba(190,0,10,.3)",
+          borderRadius: 1,
+          bgcolor: isDark ? "rgba(255,255,255,0.08)" : "rgba(190,0,10,0.22)",
           color: "inherit",
           textAlign: "left",
           cursor: "pointer",
           font: "inherit",
-          "&:hover": { bgcolor: "rgba(190,0,10,.45)" },
+          transition: "all 0.15s ease",
+          "&:hover": { bgcolor: isDark ? "rgba(255,255,255,0.14)" : "rgba(190,0,10,0.32)" },
         }}
       >
         <Box
@@ -92,7 +95,7 @@ export function NavBarActions({ user, isDark, toggleTheme }: NavBarActionsProps)
             height: 30,
             borderRadius: "50%",
             bgcolor: "common.white",
-            color: "#FF1414",
+            color: "#E3191B",
             fontSize: 12,
             fontWeight: 800,
           }}
@@ -102,13 +105,13 @@ export function NavBarActions({ user, isDark, toggleTheme }: NavBarActionsProps)
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
           <Box
             component="strong"
-            sx={{ display: "block", fontSize: { sm: 11, xl: 12 } }}
+            sx={{ display: "block", fontSize: { sm: 11, xl: 12 }, lineHeight: 1.2 }}
           >
             {user.name}
           </Box>
           <Box
             component="small"
-            sx={{ display: "block", mt: 0.25, fontSize: { sm: 8, xl: 9 } }}
+            sx={{ display: "block", mt: 0.2, fontSize: { sm: 8, xl: 9 }, lineHeight: 1.2, opacity: 0.9 }}
           >
             {user.role}
           </Box>

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { BarChart } from "../../../components/common/Charts/BarChart";
+import { StandardTable } from "../../../components/common/Tables/StandardTable";
 import { categoryOverviewXAxisData } from "../../../utils/constants";
 import KPICard from "../../../components/common/KPICard/KPICard";
 import {
@@ -10,6 +11,7 @@ import {
   CATMAN_ORANGE,
   type CatmanTab,
 } from "../../../utils/constants";
+import { skuMasterColumns, skuMasterRows } from "../../../utils/tableData";
 
 type Metric = "Value" | "Volume";
 type Channel = "Combined" | "Modern" | "Traditional";
@@ -426,6 +428,19 @@ export function CategorySkuPage() {
             />
           </Box>
         </Box>
+      </Box>
+
+      <Box sx={{ mt: 2 }}>
+        <StandardTable
+          title="SKU / Product Master — Ventas, Distribution, Alcances"
+          subtitle="% Alcances flagged: green ≥65% · amber 50–64% · red <50%"
+          columns={skuMasterColumns}
+          rows={catmanTab === "All"
+            ? skuMasterRows
+            : skuMasterRows.filter((row) => row.cells.category.value === catmanTab)}
+          maxHeight={460}
+          compact
+        />
       </Box>
     </Box>
   );

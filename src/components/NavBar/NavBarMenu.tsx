@@ -16,6 +16,7 @@ export function NavBarMenu() {
       sx={{
         display: "flex",
         justifyContent: { xs: "flex-start", sm: "center" },
+        alignItems: "stretch",
         flex: "1 1 auto",
         minWidth: 0,
         order: { xs: 3, sm: 0 },
@@ -30,23 +31,25 @@ export function NavBarMenu() {
           key={path}
           to={path}
           style={({ isActive }) => ({
-            color: isActive ? "#fff" : "rgba(255,255,255,.78)",
-            background: isActive ? "rgba(190,0,10,.28)" : "transparent",
-            boxShadow: isActive ? "inset 0 -4px #fff" : "none",
+            color: isActive ? "#FFFFFF" : "rgba(255,255,255,0.8)",
+            background: isActive ? "rgba(255,255,255,0.08)" : "transparent",
+            boxShadow: isActive ? "inset 0 -3px 0 rgba(255,255,255,0.9)" : "none",
           })}
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flex: "0 0 auto",
-            px: { xs: 1.25, sm: 1.75, xl: 2 },
-            fontSize: { xs: 10, sm: 11, xl: 14 },
+            px: { xs: 1.25, sm: 1.6, xl: 2 },
+            fontSize: { xs: 10, sm: 11, xl: 12 },
             fontWeight: 700,
+            letterSpacing: "0.04em",
             textDecoration: "none",
             whiteSpace: "nowrap",
+            transition: "all 0.15s ease",
             "&:hover": {
               color: "common.white",
-              bgcolor: "rgba(190,0,10,.28)",
+              bgcolor: "rgba(255,255,255,0.08)",
             },
           }}
         >

@@ -1,12 +1,23 @@
 import { Box, Typography } from "@mui/material";
+import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import KPICard from "../../components/common/KPICard/KPICard";
 import { ModuleBreadcrumbs } from "../../components/common/Breadcrumbs/ModuleBreadcrumbs";
 import { MultiLineChart } from "../../components/common/Charts/MultiLineChart";
+import { StandardTable } from "../../components/common/Tables/StandardTable";
+import { TableSegmentedControl } from "../../components/common/TableFilters/TableSegmentedControl";
 import {
   priceTrendXAxisData,
   priceTrendSeries,
 } from "../../utils/constants";
+import {
+  averagePriceColumns,
+  averagePriceRows,
+  factVsFcstChannelColumns,
+  factVsFcstChannelRows,
+  factVsFcstPeriodColumns,
+  factVsFcstPeriodRows,
+} from "../../utils/tableData";
 
 const pageContainerSx = {
   width: "100%",
@@ -24,6 +35,10 @@ const pageContainerSx = {
 
 export function FactVsFcstPage() {
   const theme = useTheme();
+  const [pivotView, setPivotView] = useState<"Channel" | "Technology" | "Growth" | "Yearly Growth" | "Period Trend">("Channel");
+  const [factValue, setFactValue] = useState<"RSV" | "NSV" | "Tons">("RSV");
+  const [factCut, setFactCut] = useState<"Channel" | "Customer" | "Technology" | "Period">("Channel");
+  const [priceCut, setPriceCut] = useState<"Manufacturer" | "Product" | "Warehouse" | "Customer" | "Brand" | "Area" | "Route">("Product");
 
   return (
     <Box sx={pageContainerSx}>
@@ -132,6 +147,48 @@ export function FactVsFcstPage() {
         />
         </Box>
 
+        <Box sx={{ mt: 2 }}>
+          <StandardTable
+            title={`FACT vs FCST by ${pivotView} — Period Detail`}
+            subtitle={`2026 · 13 periods by quarter · Grand Total · ${pivotView} view`}
+            columns={factVsFcstPeriodColumns}
+            rows={factVsFcstPeriodRows}
+            headerActions={
+              <TableSegmentedControl
+                options={["Channel", "Technology", "Growth", "Yearly Growth", "Period Trend"] as const}
+                value={pivotView}
+                onChange={setPivotView}
+              />
+            }
+            maxHeight={430}
+            compact
+          />
+        </Box>
+
+        <Box sx={{ mt: 2 }}>
+          <StandardTable
+            title={`FACT vs FCST by ${factCut} · ${factValue}`}
+            subtitle="FACT, FCST, O.A., FACT + OA and variance · follows the toggle above"
+            columns={factVsFcstChannelColumns}
+            rows={factVsFcstChannelRows}
+            headerActions={
+              <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                <TableSegmentedControl
+                  options={["RSV", "NSV", "Tons"] as const}
+                  value={factValue}
+                  onChange={setFactValue}
+                />
+                <TableSegmentedControl
+                  options={["Channel", "Customer", "Technology", "Period"] as const}
+                  value={factCut}
+                  onChange={setFactCut}
+                />
+              </Box>
+            }
+            compact
+          />
+        </Box>
+
       {/* PRICE ANALYSIS */}
       <Box sx={{ mt: 2 }}>
         <Typography
@@ -169,6 +226,24 @@ export function FactVsFcstPage() {
               `$${value}`,
           }}
           height={260}
+        />
+      </Box>
+
+      <Box sx={{ mt: 2 }}>
+        <StandardTable
+          title={`Average Price by ${priceCut}`}
+          subtitle="Avg price · vs Last Period (LP) · vs Last Year (LY)"
+          columns={averagePriceColumns}
+          rows={averagePriceRows}
+          headerActions={
+            <TableSegmentedControl
+              options={["Manufacturer", "Product", "Warehouse", "Customer", "Brand", "Area", "Route"] as const}
+              value={priceCut}
+              onChange={setPriceCut}
+            />
+          }
+          maxHeight={420}
+          compact
         />
       </Box>
     </Box>
