@@ -242,7 +242,6 @@ export function BarChart({
       : valueAxis,
 
     series: visibleSeries.map((item) => {
-      const baseColor = getSeriesColor(item.color);
 
       return {
         name: item.name,
@@ -290,13 +289,7 @@ export function BarChart({
         barMaxWidth,
 
         emphasis: {
-          focus: "none",
-
-          itemStyle: {
-            color: baseColor,
-          },
-
-          scale: false,
+          disabled: true,
         },
 
         blur: {

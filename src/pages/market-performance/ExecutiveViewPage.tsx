@@ -305,14 +305,20 @@ export function ExecutiveViewPage() {
             min: 2.4,
             max: 2.7,
             interval: 0.05,
-            formatter: (value) => `$${value.toFixed(1)}M`,
+            formatter: (value) => `$${value.toFixed(2)}M`,
+            nameGap: 62,
+            labelMargin: 12,
           }}
           rightAxis={{
             min: 45.5,
             max: 48,
             interval: 0.5,
             formatter: (value) => `${value.toFixed(1)}k`,
+            nameGap: 58,
+            labelMargin: 12,
           }}
+          gridLeft={70}
+          gridRight={80}
           title="Category Growth — Volume & Value"
           subtitle="Value & Volume together · P01–P13 2025"
           xAxisData={
@@ -347,7 +353,10 @@ export function ExecutiveViewPage() {
             max: 5200,
             interval: 100,
             formatter: (value) => value.toLocaleString(),
+            nameGap: 60,
+            labelMargin: 12,
           }}
+          gridLeft={72}
           series={storesSellingSeries}
           height={190}
         />

@@ -42,6 +42,9 @@ interface MultiLineChartProps {
   showLegend?: boolean;
 
   tabMinWidth?: number;
+
+  gridLeft?: number;
+  gridRight?: number;
 }
 
 interface AxisConfig {
@@ -49,6 +52,8 @@ interface AxisConfig {
   max?: number;
   interval?: number;
   formatter?: (value: number) => string;
+  nameGap?: number;
+  labelMargin?: number;
 }
 
 export function MultiLineChart({
@@ -70,6 +75,8 @@ export function MultiLineChart({
   height = 280,
   showLegend = true,
   tabMinWidth = 65,
+  gridLeft,
+  gridRight,
 }: MultiLineChartProps) {
 
   const theme = useTheme();
@@ -132,7 +139,7 @@ export function MultiLineChart({
 
       nameLocation: "middle",
       nameRotate: 90,
-      nameGap: 48,
+      nameGap: leftAxis?.nameGap ?? 48,
 
       min: leftAxis?.min,
       max: leftAxis?.max,
@@ -158,7 +165,7 @@ export function MultiLineChart({
         color: axisTextColor,
         fontSize: 12,
         fontWeight: 500,
-        margin: 10,
+        margin: leftAxis?.labelMargin ?? 10,
 
         formatter: (value: number) =>
           leftAxis?.formatter
@@ -185,7 +192,7 @@ export function MultiLineChart({
 
       nameLocation: "middle",
       nameRotate: 270,
-      nameGap: 55,
+      nameGap: rightAxis?.nameGap ?? 55,
 
       min: rightAxis?.min,
       max: rightAxis?.max,
@@ -211,7 +218,7 @@ export function MultiLineChart({
         color: axisTextColor,
         fontSize: 12,
         fontWeight: 500,
-        margin: 10,
+        margin: rightAxis?.labelMargin ?? 10,
 
         formatter: (value: number) =>
           rightAxis?.formatter
@@ -255,8 +262,8 @@ export function MultiLineChart({
     },
 
     grid: {
-      left: 55,
-      right: hasRightAxis ? 70 : 25,
+      left: gridLeft ?? 55,
+      right: gridRight ?? (hasRightAxis ? 70 : 25),
       top: 35,
       bottom: 55,
       containLabel: true,

@@ -4,6 +4,12 @@ import { useTheme } from "@mui/material/styles";
 import { BarChart } from "../../../components/common/Charts/BarChart";
 import { categoryOverviewXAxisData } from "../../../utils/constants";
 import KPICard from "../../../components/common/KPICard/KPICard";
+import {
+  CATMAN_DATA,
+  CATMAN_NAVY,
+  CATMAN_ORANGE,
+  type CatmanTab,
+} from "../../../utils/constants";
 
 type Metric = "Value" | "Volume";
 type Channel = "Combined" | "Modern" | "Traditional";
@@ -115,8 +121,10 @@ export function CategorySkuPage() {
   const theme = useTheme();
   const [metric, setMetric] = useState<Metric>("Volume");
   const [channel, setChannel] = useState<Channel>("Modern");
+  const [catmanTab, setCatmanTab] = useState<CatmanTab>("Dog");
 
   const chart = CHART_DATA[metric][channel];
+  const catman = CATMAN_DATA[catmanTab];
 
   const series = useMemo(
     () => [
@@ -129,6 +137,42 @@ export function CategorySkuPage() {
       },
     ],
     [chart],
+  );
+
+  const ventasSeries = useMemo(
+    () => [
+      {
+        name: "Ventas",
+        data: catman.ventasByFamily.values,
+        color: CATMAN_NAVY,
+        colors: catman.ventasByFamily.colors,
+      },
+    ],
+    [catman],
+  );
+
+  const distributionSeries = useMemo(
+    () => [
+      {
+        name: "Distribution points",
+        data: catman.distributionBySize.values,
+        color: CATMAN_ORANGE,
+        colors: catman.distributionBySize.colors,
+      },
+    ],
+    [catman],
+  );
+
+  const alcancesSeries = useMemo(
+    () => [
+      {
+        name: "% Alcances",
+        data: catman.alcancesBySku.values,
+        color: CATMAN_NAVY,
+        colors: catman.alcancesBySku.colors,
+      },
+    ],
+    [catman],
   );
 
   const isVolume = metric === "Volume";
@@ -181,7 +225,7 @@ export function CategorySkuPage() {
       <Box sx={{ mt: 2 }}>
         <BarChart
           title="Category Overview — All Manufacturers"
-          subtitle={`${isVolume ? "Volume (Tons)" : "Volume (Tons)"} · ${channel} · Δ vs LY shown on bars`}
+          subtitle={`${isVolume ? "Volume (Tons)" : "Value ($K)"} · ${channel} · Δ vs LY shown on bars`}
           headerActions={
             <>
               <SegmentedControl
@@ -198,7 +242,7 @@ export function CategorySkuPage() {
           }
           xAxisData={categoryOverviewXAxisData}
           xAxisName="Manufacturer"
-          yAxisName={isVolume ? "Volume (Tons)" : "Voumne (Tons)"}
+          yAxisName={isVolume ? "Volume (Tons)" : "Value ($K)"}
           series={series}
           legendItems={LEGEND_ITEMS}
           yAxis={{
@@ -211,6 +255,177 @@ export function CategorySkuPage() {
           height={320}
           showLegend
         />
+      </Box>
+
+      {/* ============ BEYOND CATMAN — SKU DEEP DIVE ============ */}
+
+      <Box sx={{ mt: 3 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+            mb: 1.5,
+            flexWrap: "wrap",
+          }}
+        >
+          <Box
+            sx={{
+              px: 1.5,
+              py: 0.5,
+              borderRadius: "999px",
+              border: "1px solid",
+              borderColor: "primary.main",
+              color: "primary.main",
+              fontSize: 12,
+              fontWeight: 600,
+              bgcolor: "background.paper",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Beyond Catman
+          </Box>
+
+          <Typography sx={{ fontSize: 15, fontWeight: 700 }}>
+            SKU, Family, Size, Ventas, Distribution & Alcances
+          </Typography>
+        </Box>
+
+        <Box
+          sx={{
+            borderRadius: 2,
+            border: "1px solid",
+            borderColor: "divider",
+            bgcolor: "background.paper",
+            p: 2,
+            boxSizing: "border-box",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+              gap: 2,
+              mb: 2,
+              flexWrap: "wrap",
+            }}
+          >
+            <Box sx={{ minWidth: 0 }}>
+              <Typography sx={{ fontSize: 16, fontWeight: 700, lineHeight: 1.3 }}>
+                Beyond Catman — SKU Deep Dive
+              </Typography>
+              <Typography
+                sx={{ mt: 0.4, fontSize: 12, color: "text.secondary" }}
+              >
+                Ventas, distribution, alcances and % alcances by product / SKU / family / size
+              </Typography>
+            </Box>
+
+            <SegmentedControl
+              options={["All", "Dog", "Cat"] as const}
+              value={catmanTab}
+              onChange={setCatmanTab}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                md: "repeat(3, minmax(0, 1fr))",
+              },
+              gap: 1.75,
+            }}
+          >
+            <KPICard
+              label="ACTIVE SKUS"
+              value={catman.kpis.activeSkus}
+              accentColor={theme.palette.primary.main}
+              comparison={{ status: "neutral", value: "in current cut", text: "" }}
+            />
+            <KPICard
+              label="PRODUCT FAMILIES"
+              value={catman.kpis.productFamilies}
+              accentColor={theme.palette.mode === "dark" ? "#A6D900" : "#84BD00"}
+              comparison={{ status: "neutral", value: "distinct families", text: "" }}
+            />
+            <KPICard
+              label="AVG % ALCANCES"
+              value={catman.kpis.avgAlcances}
+              accentColor={theme.palette.mode === "dark" ? "#40E8C8" : "#00DCFA"}
+              comparison={{ status: "neutral", value: "weighted reach", text: "" }}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                lg: "repeat(3, minmax(0, 1fr))",
+              },
+              gap: 2,
+              mt: 2,
+            }}
+          >
+            <BarChart
+              title="Ventas by Family"
+              xAxisData={catman.ventasByFamily.categories}
+              xAxisName="Family"
+              yAxisName="Ventas ($)"
+              series={ventasSeries}
+              yAxis={{
+                min: 0,
+                max: catman.ventasByFamily.max,
+                interval: catman.ventasByFamily.interval,
+                formatter: (value: number) => `$${value.toFixed(1)}M`,
+              }}
+              height={230}
+              barMaxWidth={46}
+              showLegend={false}
+              showContainer={false}
+            />
+
+            <BarChart
+              title="Distribution by Size Range"
+              xAxisData={catman.distributionBySize.categories}
+              xAxisName="Size range"
+              yAxisName="Distribution points"
+              series={distributionSeries}
+              yAxis={{
+                min: 0,
+                max: catman.distributionBySize.max,
+                interval: catman.distributionBySize.interval,
+                formatter: (value: number) => value.toLocaleString(),
+              }}
+              height={230}
+              barMaxWidth={46}
+              showLegend={false}
+              showContainer={false}
+            />
+
+            <BarChart
+              title="% Alcances by SKU"
+              horizontal
+              xAxisData={catman.alcancesBySku.categories}
+              xAxisName="% Alcances"
+              yAxisName="SKU"
+              series={alcancesSeries}
+              yAxis={{
+                min: 0,
+                max: catman.alcancesBySku.max,
+                interval: catman.alcancesBySku.interval,
+                formatter: (value: number) => `${value}%`,
+              }}
+              height={230}
+              barMaxWidth={12}
+              showLegend={false}
+              showContainer={false}
+            />
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
