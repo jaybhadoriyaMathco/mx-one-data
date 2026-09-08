@@ -981,9 +981,9 @@ export const categoryOverviewXAxisData: string[] = [
 export const categoryOverviewSeries: BarChartSeries[] = [
   {
     name: "Value",
-    data: [5400, 4300, 1700, 1000], // Value ($000 MXN) — replace with real data
-    color: "#0000A8",               // fallback color
-    colors: ["#0000A8", "#FF8000", "#1FC6DB", "#C2187B"], // per-bar: MARS, Nestlé, Malta, ADM
+    data: [5400, 4300, 1700, 1000], 
+    color: "#0000A8",               
+    colors: ["#0000A8", "#FF8000", "#1FC6DB", "#C2187B"], 
     barLabels: [
       { text: "▲ +7.2%", color: "#43A047" },
       { text: "▲ +6.1%", color: "#43A047" },
@@ -993,3 +993,256 @@ export const categoryOverviewSeries: BarChartSeries[] = [
   },
 ];
 
+
+export const MARS_DISTRIBUTION_TREND_CHART = {
+  title: "ROS & Distribution Trend",
+
+  subtitle: "P01–P13 2025",
+
+  tabs: ["RSV", "Vol"],
+
+  activeTab: "Vol",
+
+  skuOptions: [
+    "All SKUs",
+    "Pedigree Pouch",
+    "Whiskas",
+  ],
+
+  defaultSku: "Pedigree Pouch",
+
+  xAxisData: [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13",
+  ],
+
+  xAxisName: "Period",
+
+  leftAxis: {
+    min: 315,
+    max: 365,
+    interval: 10,
+    formatter: (value: number) => `${value}`,
+  },
+
+  rightAxis: {
+    min: 4700,
+    max: 5000,
+    interval: 100,
+    formatter: (value: number) =>
+      value.toLocaleString("en-US"),
+  },
+
+  series: [
+    {
+      name: "ROS",
+      data: [
+        320,
+        324,
+        327,
+        333,
+        322,
+        360,
+        344,
+        335,
+        328,
+        323,
+        331,
+        354,
+        358,
+      ],
+      color: "#0808A8",
+      fill: true,
+      yAxisIndex: 0,
+    },
+
+    {
+      name: "Stores Selling",
+      data: [
+        4705,
+        4710,
+        4720,
+        4740,
+        4780,
+        4820,
+        4890,
+        4930,
+        4970,
+        4975,
+        4960,
+        4980,
+        5000,
+      ],
+      color: "#00CFEF",
+      yAxisIndex: 1,
+    },
+  ],
+};
+
+
+/* ============================================================
+   BEYOND CATMAN — SKU DEEP DIVE
+   ============================================================ */
+
+export type CatmanTab = "All" | "Dog" | "Cat";
+
+export const CATMAN_NAVY = "#0D0DC2";
+export const CATMAN_ORANGE = "#F57C00";
+export const CATMAN_GREY = "#C9C9C9";
+
+export interface CatmanKpis {
+  activeSkus: string;
+  productFamilies: string;
+  avgAlcances: string;
+}
+
+export interface CatmanBarBlock {
+  categories: string[];
+  values: number[];
+  colors: string[];
+  max: number;
+  interval: number;
+}
+
+export interface CatmanDataset {
+  kpis: CatmanKpis;
+  ventasByFamily: CatmanBarBlock;
+  distributionBySize: CatmanBarBlock;
+  alcancesBySku: CatmanBarBlock;
+}
+
+/** highlight the first `n` bars in navy, grey out the rest */
+const highlight = (total: number, n: number) =>
+  Array.from({ length: total }, (_, i) =>
+    i < n ? CATMAN_NAVY : CATMAN_GREY,
+  );
+
+const orange = (total: number) =>
+  Array.from({ length: total }, () => CATMAN_ORANGE);
+
+export const CATMAN_DATA: Record<CatmanTab, CatmanDataset> = {
+  All: {
+    kpis: {
+      activeSkus: "13",
+      productFamilies: "6",
+      avgAlcances: "58%",
+    },
+    ventasByFamily: {
+      categories: [
+        "Pedigree",
+        "Whiskas",
+        "Ganador",
+        "Campeon",
+        "Sheba",
+        "Temptations",
+      ],
+      values: [9.6, 6.2, 0.9, 0.85, 0.35, 0.3],
+      colors: highlight(6, 2),
+      max: 10,
+      interval: 2,
+    },
+    distributionBySize: {
+      categories: ["<1.5kg", "1.5-3.5kg", "3.5-5.5kg", "8.5-11kg", "15-25kg"],
+      values: [2100, 4950, 1200, 3000, 1850],
+      colors: orange(5),
+      max: 5000,
+      interval: 1000,
+    },
+    alcancesBySku: {
+      categories: [
+        "Ped AD Res 24/100g",
+        "Ped Pavo y Zanahoria",
+        "Ped Pouch Beef",
+        "Whiskas Pouch Atún",
+        "MVP Bf+Ckn 24/85g",
+        "Temptations Chicken",
+        "Campeon Carne 20kg",
+      ],
+      values: [74, 71, 68, 63, 55, 50, 41],
+      colors: highlight(7, 6),
+      max: 100,
+      interval: 20,
+    },
+  },
+
+  Dog: {
+    kpis: {
+      activeSkus: "8",
+      productFamilies: "3",
+      avgAlcances: "62%",
+    },
+    ventasByFamily: {
+      categories: ["Pedigree", "Ganador", "Campeon"],
+      values: [9.6, 0.9, 0.85],
+      colors: highlight(3, 1),
+      max: 10,
+      interval: 2,
+    },
+    distributionBySize: {
+      categories: ["<1.5kg", "1.5-3.5kg", "3.5-5.5kg", "8.5-11kg", "15-25kg"],
+      values: [1200, 2600, 900, 3000, 1850],
+      colors: orange(5),
+      max: 5000,
+      interval: 1000,
+    },
+    alcancesBySku: {
+      categories: [
+        "Ped AD Res 24/100g",
+        "Ped Pavo y Zanahoria",
+        "Ped Pouch Beef",
+        "Ganador Carne 8kg",
+        "Campeon Carne 20kg",
+      ],
+      values: [74, 71, 68, 52, 41],
+      colors: highlight(5, 4),
+      max: 100,
+      interval: 20,
+    },
+  },
+
+  Cat: {
+    kpis: {
+      activeSkus: "5",
+      productFamilies: "3",
+      avgAlcances: "51%",
+    },
+    ventasByFamily: {
+      categories: ["Whiskas", "Sheba", "Temptations"],
+      values: [6.2, 0.35, 0.3],
+      colors: highlight(3, 1),
+      max: 10,
+      interval: 2,
+    },
+    distributionBySize: {
+      categories: ["<1.5kg", "1.5-3.5kg", "3.5-5.5kg"],
+      values: [2100, 2350, 300],
+      colors: orange(3),
+      max: 5000,
+      interval: 1000,
+    },
+    alcancesBySku: {
+      categories: [
+        "Whiskas Pouch Atún",
+        "Whiskas Carne 1.5kg",
+        "MVP Bf+Ckn 24/85g",
+        "Temptations Chicken",
+        "Sheba Pouch 85g",
+      ],
+      values: [63, 58, 55, 50, 38],
+      colors: highlight(5, 4),
+      max: 100,
+      interval: 20,
+    },
+  },
+};
