@@ -18,7 +18,14 @@ export type StandardTableCell = {
   value: string | number | null;
   status?: TableCellStatus;
   emphasis?: boolean;
-  display?: "text" | "tag";
+  display?: "text" | "tag" | "sparkline";
+  dotColor?: string;
+  sparkline?: {
+    data: number[];
+    color: string;
+    width?: number;
+    height?: number;
+  };
   bar?: {
     value: number;
     max?: number;
@@ -56,6 +63,58 @@ type StandardTableProps = {
   maxHeight?: number | string;
   compact?: boolean;
 };
+
+
+function Sparkline({
+  data,
+  color,
+  width = 110,
+  height = 28,
+}: {
+  data: number[];
+  color: string;
+  width?: number;
+  height?: number;
+}) {
+  if (!data || data.length < 2) {
+    return null;
+  }
+
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const span = max - min || 1;
+  const padY = 3;
+
+  const points = data
+    .map((value, index) => {
+      const x = (index / (data.length - 1)) * width;
+      const y =
+        height - padY - ((value - min) / span) * (height - padY * 2);
+      return `${x.toFixed(2)},${y.toFixed(2)}`;
+    })
+    .join(" ");
+
+  return (
+    <Box
+      component="svg"
+      viewBox={`0 0 ${width} ${height}`}
+      width={width}
+      height={height}
+      preserveAspectRatio="none"
+      sx={{ display: "block", overflow: "visible" }}
+    >
+      <polyline
+        points={points}
+        fill="none"
+        stroke={color}
+        strokeWidth={1.8}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+    </Box>
+  );
+}
 
 function renderCellValue(cell: StandardTableCell) {
   if (cell.value === null || cell.value === undefined) {
@@ -101,6 +160,28 @@ function TableDataCell({
     },
   };
   const tagStyle = cell.status ? tagStyles[cell.status] : tagStyles.neutral;
+
+  if (cell.display === "sparkline" && cell.sparkline) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent:
+            align === "right" ? "flex-end" : align === "center" ? "center" : "flex-start",
+          width: "100%",
+          minHeight: 28,
+        }}
+      >
+        <Sparkline
+          data={cell.sparkline.data}
+          color={cell.sparkline.color}
+          width={cell.sparkline.width}
+          height={cell.sparkline.height}
+        />
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -153,6 +234,21 @@ function TableDataCell({
           fontWeight: cell.display === "tag" || cell.emphasis ? 600 : "inherit",
         }}
       >
+        {cell.dotColor && (
+          <Box
+            component="span"
+            sx={{
+              display: "inline-block",
+              width: 9,
+              height: 9,
+              minWidth: 9,
+              borderRadius: "50%",
+              bgcolor: cell.dotColor,
+              mr: 1,
+              verticalAlign: "middle",
+            }}
+          />
+        )}
         {renderCellValue(cell)}
       </Box>
     </Box>

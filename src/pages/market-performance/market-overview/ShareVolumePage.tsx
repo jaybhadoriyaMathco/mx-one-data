@@ -15,6 +15,23 @@ import {
   marsBreedSizeMixSeries,
   marketBreedSizeMixSeries,
   breedSizeIndexSeries,
+  somTrendMonthlyXAxis,
+  somTrendQuarterlyXAxis,
+  somTrendYearlyXAxis,
+  somTrendMonthlySeries,
+  somTrendQuarterlySeries,
+  somTrendYearlySeries,
+  somCategoryXAxis,
+  somCategorySeries,
+  somChannelXAxis,
+  somChannelSeries,
+  somChannelLegend,
+  somSubChannelXAxis,
+  somSubChannelSeries,
+  somTableColumns,
+  somTableRows,
+  type SomView,
+  type SomPeriod,
 } from "../../../utils/constants";
 import { salesSomColumns, salesSomRows, salesRsvRows } from "../../../utils/tableData";
 
@@ -33,6 +50,101 @@ const pageContainerSx = {
 export function ShareVolumePage() {
   const theme = useTheme();
   const [tableMetric, setTableMetric] = useState<"SOM %" | "Sales (RSV)">("SOM %");
+
+  const [somView, setSomView] = useState<SomView>("Trend");
+  const [somPeriod, setSomPeriod] = useState<SomPeriod>("Monthly");
+  const [somDisplay, setSomDisplay] = useState<"Graph" | "Table">("Graph");
+
+  const somTrend =
+    somPeriod === "Quarterly"
+      ? { xAxis: somTrendQuarterlyXAxis, series: somTrendQuarterlySeries, name: "Quarter" }
+      : somPeriod === "Yearly"
+        ? { xAxis: somTrendYearlyXAxis, series: somTrendYearlySeries, name: "Year" }
+        : { xAxis: somTrendMonthlyXAxis, series: somTrendMonthlySeries, name: "Month" };
+
+  const somBar =
+    somView === "Category"
+      ? {
+          xAxis: somCategoryXAxis,
+          series: somCategorySeries,
+          axisName: "Category",
+          max: 45,
+          interval: 5,
+          legend: undefined,
+          subtitle: "Manufacturer SOM by category · All channels",
+        }
+      : somView === "Channel"
+        ? {
+            xAxis: somChannelXAxis,
+            series: somChannelSeries,
+            axisName: "Manufacturer",
+            max: 40,
+            interval: 5,
+            legend: somChannelLegend,
+            subtitle: "Manufacturer SOM split by channel · All channels",
+          }
+        : {
+            xAxis: somSubChannelXAxis,
+            series: somSubChannelSeries,
+            axisName: "Sub-channel",
+            max: 60,
+            interval: 10,
+            legend: undefined,
+            subtitle: "Sub-channel SOM split by competitor · All channels",
+          };
+
+  const somSubtitle =
+    somView === "Trend"
+      ? "SOM trend by manufacturer · share within tracked manufacturers · All channels"
+      : somBar.subtitle;
+
+  const somControls = (
+    <>
+      <TableSegmentedControl
+        options={["Trend", "Category", "Channel", "Sub-channel"] as const}
+        value={somView}
+        onChange={(v) => setSomView(v as SomView)}
+      />
+
+      {somView === "Trend" && somDisplay === "Graph" && (
+        <TableSegmentedControl
+          options={["Monthly", "Quarterly", "Yearly"] as const}
+          value={somPeriod}
+          onChange={(v) => setSomPeriod(v as SomPeriod)}
+        />
+      )}
+
+      <Box
+        component="button"
+        type="button"
+        onClick={() =>
+          setSomDisplay((d) => (d === "Graph" ? "Table" : "Graph"))
+        }
+        sx={{
+          appearance: "none",
+          fontFamily: "inherit",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 0.7,
+          px: 1.5,
+          py: 0.75,
+          fontSize: 12,
+          fontWeight: 700,
+          lineHeight: 1.2,
+          cursor: "pointer",
+          borderRadius: "8px",
+          border: "1px solid",
+          borderColor: "divider",
+          bgcolor: "background.paper",
+          color: "primary.main",
+          whiteSpace: "nowrap",
+          "&:hover": { bgcolor: "action.hover" },
+        }}
+      >
+        {somDisplay === "Graph" ? "▦ Table" : "▲ Graph"}
+      </Box>
+    </>
+  );
 
   const [brandView, setBrandView] =
     useState<"All Tech" | "Dry" | "Wet">("All Tech");
@@ -220,6 +332,67 @@ export function ShareVolumePage() {
             value: "Below value growth",
           }}
         />
+      </Box>
+
+      {/* SOM & MARKET SHARE */}
+      <Box sx={{ mt: 2, minWidth: 0 }}>
+        {somDisplay === "Table" ? (
+          <StandardTable
+            title="SOM & Market Share"
+            subtitle={somSubtitle}
+            columns={somTableColumns}
+            rows={somTableRows}
+            headerActions={
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+                {somControls}
+              </Box>
+            }
+            compact
+          />
+        ) : somView === "Trend" ? (
+          <MultiLineChart
+            title="SOM & Market Share"
+            subtitle={somSubtitle}
+            xAxisData={somTrend.xAxis}
+            xAxisName={somTrend.name}
+            series={somTrend.series}
+            leftAxisName="SOM (%)"
+            leftAxis={{
+              min: 0,
+              max: 45,
+              interval: 5,
+              formatter: (value) => `${value}%`,
+            }}
+            rightAxis={{
+              min: 4,
+              max: 6.5,
+              interval: 0.5,
+              formatter: (value) => `+${value.toFixed(1)}%`,
+              nameGap: 56,
+            }}
+            headerActions={somControls}
+            height={300}
+          />
+        ) : (
+          <BarChart
+            title="SOM & Market Share"
+            subtitle={somSubtitle}
+            xAxisData={somBar.xAxis}
+            xAxisName={somBar.axisName}
+            yAxisName="SOM (%)"
+            series={somBar.series}
+            legendItems={somBar.legend}
+            yAxis={{
+              min: 0,
+              max: somBar.max,
+              interval: somBar.interval,
+              formatter: (value) => `${value}%`,
+            }}
+            headerActions={somControls}
+            barMaxWidth={54}
+            height={300}
+          />
+        )}
       </Box>
 
       {/* MARKET SEGMENTATION */}
