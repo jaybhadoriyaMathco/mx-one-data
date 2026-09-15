@@ -11,6 +11,9 @@ import {
   useTheme,
 } from "@mui/material";
 import type { ReactNode } from "react";
+import { useMemo } from "react";
+import ReactECharts from "echarts-for-react";
+import type { EChartsOption } from "echarts";
 
 export type TableCellStatus = "positive" | "negative" | "warning" | "neutral";
 
@@ -76,43 +79,52 @@ function Sparkline({
   width?: number;
   height?: number;
 }) {
+  const option: EChartsOption = useMemo(
+    () => ({
+      grid: { left: 2, right: 2, top: 4, bottom: 4, containLabel: false },
+
+      xAxis: {
+        type: "category",
+        show: false,
+        boundaryGap: false,
+        data: data.map((_, index) => index),
+      },
+
+      yAxis: {
+        type: "value",
+        show: false,
+        scale: true,
+      },
+
+      series: [
+        {
+          type: "line",
+          data,
+          smooth: true,
+          showSymbol: false,
+          silent: true,
+          lineStyle: { width: 1.8, color },
+          itemStyle: { color },
+          emphasis: { disabled: true },
+        },
+      ],
+
+      animation: false,
+    }),
+    [data, color],
+  );
+
   if (!data || data.length < 2) {
     return null;
   }
 
-  const min = Math.min(...data);
-  const max = Math.max(...data);
-  const span = max - min || 1;
-  const padY = 3;
-
-  const points = data
-    .map((value, index) => {
-      const x = (index / (data.length - 1)) * width;
-      const y =
-        height - padY - ((value - min) / span) * (height - padY * 2);
-      return `${x.toFixed(2)},${y.toFixed(2)}`;
-    })
-    .join(" ");
-
   return (
-    <Box
-      component="svg"
-      viewBox={`0 0 ${width} ${height}`}
-      width={width}
-      height={height}
-      preserveAspectRatio="none"
-      sx={{ display: "block", overflow: "visible" }}
-    >
-      <polyline
-        points={points}
-        fill="none"
-        stroke={color}
-        strokeWidth={1.8}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-    </Box>
+    <ReactECharts
+      option={option}
+      style={{ width, height }}
+      notMerge
+      lazyUpdate
+    />
   );
 }
 
@@ -162,6 +174,9 @@ function TableDataCell({
   const tagStyle = cell.status ? tagStyles[cell.status] : tagStyles.neutral;
 
   if (cell.display === "sparkline" && cell.sparkline) {
+    const sparkWidth = cell.sparkline.width ?? 110;
+    const sparkHeight = cell.sparkline.height ?? 28;
+
     return (
       <Box
         sx={{
@@ -170,7 +185,8 @@ function TableDataCell({
           justifyContent:
             align === "right" ? "flex-end" : align === "center" ? "center" : "flex-start",
           width: "100%",
-          minHeight: 28,
+          height: sparkHeight,
+          "& > div": { width: sparkWidth, height: sparkHeight },
         }}
       >
         <Sparkline
