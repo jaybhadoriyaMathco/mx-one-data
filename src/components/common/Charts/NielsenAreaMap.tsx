@@ -131,7 +131,7 @@ export function NielsenAreaMap({
         {
           type: "scatter",
           coordinateSystem: "geo",
-          symbolSize: 1,
+          symbolSize: 2,
           silent: true,
           data: NIELSEN_AREAS.map((area) => ({
             name: area.shortLabel,
@@ -141,30 +141,48 @@ export function NielsenAreaMap({
           label: {
             show: true,
             position: "inside",
+            align: "center",
+            verticalAlign: "middle",
             formatter: (params: any) => {
               const area = NIELSEN_AREAS.find(
                 (a) => a.id === params.data.areaId,
               );
+
               return `{t|${area?.shortLabel}}\n{v|${area?.growth}}`;
             },
             rich: {
               t: {
-                fontSize: 11,
-                fontWeight: 700,
-                color: isDark ? "#F2F2F5" : "#1A1A1A",
-                lineHeight: 14,
-                textBorderColor: isDark ? "#12151C" : "#FFFFFF",
-                textBorderWidth: 3,
+                fontSize: 12.5,
+                fontWeight: "bolder",
+                fontFamily: "inherit",
+                color: "#FAFAFA",
+                lineHeight: 16,
+                textBorderColor: "rgba(15,17,22,0.92)",
+                textBorderWidth: 2.5,
+                textShadowColor: "rgba(0,0,0,0.55)",
+                textShadowBlur: 4,
+                textShadowOffsetY: 1,
               },
               v: {
-                fontSize: 11,
-                fontWeight: 700,
-                color: isDark ? "#F2F2F5" : "#1A1A1A",
-                lineHeight: 14,
-                textBorderColor: isDark ? "#12151C" : "#FFFFFF",
-                textBorderWidth: 3,
+                fontSize: 12,
+                fontWeight: "bolder",
+                fontFamily: "inherit",
+                color: "#FAFAFA",
+                lineHeight: 15,
+                textBorderColor: "rgba(15,17,22,0.92)",
+                textBorderWidth: 2.5,
+                textShadowColor: "rgba(0,0,0,0.55)",
+                textShadowBlur: 4,
+                textShadowOffsetY: 1,
               },
             },
+          },
+          labelLine: {
+            show: false,
+          },
+          labelLayout: {
+            hideOverlap: false,
+            moveOverlap: "shiftY",
           },
         },
       ],
@@ -256,6 +274,7 @@ export function NielsenAreaMap({
             <ReactECharts
               option={option}
               style={{ width: "100%", height }}
+              opts={{ renderer: "svg" }}
               onEvents={onEvents}
               notMerge
               lazyUpdate

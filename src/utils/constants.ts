@@ -1483,7 +1483,7 @@ export const NIELSEN_AREAS: NielsenArea[] = [
     rsvMix: "18.4%",
     growth: "+5.2%",
     rsv: "842k",
-    labelCoord: [-107.5, 28.5],
+    labelCoord: [-108.2, 28.8],
     states: [
       "Baja California",
       "Baja California Sur",
@@ -1506,7 +1506,7 @@ export const NIELSEN_AREAS: NielsenArea[] = [
     rsvMix: "24.1%",
     growth: "+4.1%",
     rsv: "1,382k",
-    labelCoord: [-103.8, 20.2],
+    labelCoord: [-104.2, 20.0],
     states: ["Nayarit", "Jalisco", "Colima", "Michoacán"],
   },
   {
@@ -1519,7 +1519,7 @@ export const NIELSEN_AREAS: NielsenArea[] = [
     rsvMix: "15.3%",
     growth: "+6.0%",
     rsv: "877k",
-    labelCoord: [-101.2, 22.4],
+    labelCoord: [-101.5, 22.8],
     states: [
       "Zacatecas",
       "Aguascalientes",
@@ -1538,7 +1538,7 @@ export const NIELSEN_AREAS: NielsenArea[] = [
     rsvMix: "13.0%",
     growth: "+3.2%",
     rsv: "744k",
-    labelCoord: [-98.2, 19.6],
+    labelCoord: [-98.8, 20.4],
     states: ["Hidalgo", "Tlaxcala", "Puebla", "Morelos"],
   },
   {
@@ -1551,7 +1551,7 @@ export const NIELSEN_AREAS: NielsenArea[] = [
     rsvMix: "17.4%",
     growth: "+7.4%",
     rsv: "995k",
-    labelCoord: [-100.2, 19.3],
+    labelCoord: [-99.8, 18.8],
     states: ["Ciudad de México", "México"],
   },
   {
@@ -1564,7 +1564,7 @@ export const NIELSEN_AREAS: NielsenArea[] = [
     rsvMix: "11.8%",
     growth: "+8.1%",
     rsv: "1,082k",
-    labelCoord: [-94.5, 17.4],
+    labelCoord: [-94.0, 17.0],
     states: [
       "Guerrero",
       "Oaxaca",
