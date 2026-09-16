@@ -1452,3 +1452,137 @@ export const somTableRowDots: Record<string, string> = {
   malta: SOM_MALTA,
   adm: SOM_ADM,
 };
+
+
+/* NIELSEN AREA MAP */
+
+export type NielsenMetric = "SOM %" | "RSV Mix" | "Growth";
+
+export interface NielsenArea {
+  id: string;
+  name: string;
+  shortLabel: string;
+  color: string;
+  popShare: string;
+  som: string;
+  rsvMix: string;
+  growth: string;
+  rsv: string;
+  states: string[];
+  labelCoord: [number, number];
+}
+
+export const NIELSEN_AREAS: NielsenArea[] = [
+  {
+    id: "area1",
+    name: "Area I — North",
+    shortLabel: "Area I",
+    color: "#0000A0",
+    popShare: "20%",
+    som: "40.0%",
+    rsvMix: "18.4%",
+    growth: "+5.2%",
+    rsv: "842k",
+    labelCoord: [-108.2, 28.8],
+    states: [
+      "Baja California",
+      "Baja California Sur",
+      "Sonora",
+      "Sinaloa",
+      "Chihuahua",
+      "Coahuila",
+      "Nuevo León",
+      "Tamaulipas",
+      "Durango",
+    ],
+  },
+  {
+    id: "area2",
+    name: "Area II — Pacific",
+    shortLabel: "Area II",
+    color: "#BC2486",
+    popShare: "15%",
+    som: "38.9%",
+    rsvMix: "24.1%",
+    growth: "+4.1%",
+    rsv: "1,382k",
+    labelCoord: [-104.2, 20.0],
+    states: ["Nayarit", "Jalisco", "Colima", "Michoacán"],
+  },
+  {
+    id: "area3",
+    name: "Area III — Bajío",
+    shortLabel: "Area III",
+    color: "#22D3EE",
+    popShare: "12%",
+    som: "38.3%",
+    rsvMix: "15.3%",
+    growth: "+6.0%",
+    rsv: "877k",
+    labelCoord: [-101.5, 22.8],
+    states: [
+      "Zacatecas",
+      "Aguascalientes",
+      "San Luis Potosí",
+      "Guanajuato",
+      "Querétaro",
+    ],
+  },
+  {
+    id: "area4",
+    name: "Area IV — Centre",
+    shortLabel: "Area IV",
+    color: "#84BD00",
+    popShare: "14%",
+    som: "33.5%",
+    rsvMix: "13.0%",
+    growth: "+3.2%",
+    rsv: "744k",
+    labelCoord: [-98.8, 20.4],
+    states: ["Hidalgo", "Tlaxcala", "Puebla", "Morelos"],
+  },
+  {
+    id: "area5",
+    name: "Area V — Valle de Méx.",
+    shortLabel: "Area V",
+    color: "#FF7900",
+    popShare: "22%",
+    som: "31.5%",
+    rsvMix: "17.4%",
+    growth: "+7.4%",
+    rsv: "995k",
+    labelCoord: [-99.8, 18.8],
+    states: ["Ciudad de México", "México"],
+  },
+  {
+    id: "area6",
+    name: "Area VI — Southeast",
+    shortLabel: "Area VI",
+    color: "#D4A017",
+    popShare: "17%",
+    som: "36.1%",
+    rsvMix: "11.8%",
+    growth: "+8.1%",
+    rsv: "1,082k",
+    labelCoord: [-94.0, 17.0],
+    states: [
+      "Guerrero",
+      "Oaxaca",
+      "Chiapas",
+      "Tabasco",
+      "Veracruz",
+      "Campeche",
+      "Yucatán",
+      "Quintana Roo",
+    ],
+  },
+];
+
+export function nielsenMetricValue(
+  area: NielsenArea,
+  metric: NielsenMetric,
+) {
+  if (metric === "RSV Mix") return area.rsvMix;
+  if (metric === "Growth") return area.som;
+  return area.som;
+}

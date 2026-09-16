@@ -5,6 +5,7 @@ import KPICard from "../../../components/common/KPICard/KPICard";
 import { MultiLineChart } from "../../../components/common/Charts/MultiLineChart";
 import { BarChart } from "../../../components/common/Charts/BarChart";
 import { StandardTable } from "../../../components/common/Tables/StandardTable";
+import { NielsenAreaMap } from "../../../components/common/Charts/NielsenAreaMap";
 import { TableSegmentedControl } from "../../../components/common/TableFilters/TableSegmentedControl";
 import {
   brandSomXAxisData,
@@ -32,6 +33,7 @@ import {
   somTableRows,
   type SomView,
   type SomPeriod,
+  type NielsenMetric,
 } from "../../../utils/constants";
 import { salesSomColumns, salesSomRows, salesRsvRows } from "../../../utils/tableData";
 import { useTranslation } from "../../../i18n/I18nContext";
@@ -174,6 +176,9 @@ export function ShareVolumePage() {
     "Life Stage",
     "Breed Size",
   ] as const;
+
+  const [nielsenMetric, setNielsenMetric] = useState<NielsenMetric>("Growth");
+  const [selectedArea, setSelectedArea] = useState<string | null>(null);
 
   return (
     <Box sx={pageContainerSx}>
@@ -611,6 +616,23 @@ export function ShareVolumePage() {
           }
           maxHeight={520}
           compact
+        />
+      </Box>
+
+      {/* NIELSEN AREA MAP */}
+      <Box sx={{ mt: 2, minWidth: 0 }}>
+        <NielsenAreaMap
+          metric={nielsenMetric}
+          selectedAreaId={selectedArea}
+          onSelectArea={setSelectedArea}
+          headerActions={
+            <TableSegmentedControl
+              options={["SOM %", "RSV Mix", "Growth"] as const}
+              value={nielsenMetric}
+              onChange={(v) => setNielsenMetric(v as NielsenMetric)}
+            />
+          }
+          height={440}
         />
       </Box>
     </Box>
