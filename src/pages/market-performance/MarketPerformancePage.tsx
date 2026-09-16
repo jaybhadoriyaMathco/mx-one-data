@@ -2,10 +2,12 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Sidebar, type SidebarEntry } from "../../components/common/Sidebar/Sidebar";
+import { useTranslation } from "../../i18n/I18nContext";
 
 export function MarketPerformancePage() {
   const [collapsed, setCollapsed] = useState(false);
   const isDark = useTheme()
+  const { t } = useTranslation();
 
   const items: SidebarEntry[] = [
     {
@@ -48,7 +50,7 @@ export function MarketPerformancePage() {
       }}
     >
       <Sidebar
-        title="Market Performance"
+        title={t("Market Performance")}
         items={items}
         collapsed={collapsed}
         onToggleCollapse={() => setCollapsed((value) => !value)}

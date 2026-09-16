@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import ReactECharts from "echarts-for-react";
 import type { EChartsOption } from "echarts";
+import { useTranslation } from "../../../i18n/I18nContext";
 
 interface BarLabelConfig {
   text: string;
@@ -70,6 +71,7 @@ export function BarChart({
   showContainer = true,
 }: BarChartProps) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const isDark = theme.palette.mode === "dark";
 
   const [hiddenSeries, setHiddenSeries] = useState<string[]>([]);
@@ -114,7 +116,9 @@ export function BarChart({
 
   const valueAxis = {
     type: "value" as const,
-    name: horizontal ? xAxisName : yAxisName,
+    name: horizontal
+      ? (xAxisName ? t(xAxisName) : undefined)
+      : (yAxisName ? t(yAxisName) : undefined),
     nameLocation: "middle" as const,
     nameGap: horizontal ? 28 : 45,
 
@@ -161,7 +165,9 @@ export function BarChart({
     type: "category" as const,
     data: xAxisData,
 
-    name: horizontal ? yAxisName : xAxisName,
+    name: horizontal
+      ? (yAxisName ? t(yAxisName) : undefined)
+      : (xAxisName ? t(xAxisName) : undefined),
     nameLocation: "middle" as const,
     nameGap: horizontal ? 120 : 28,
 
@@ -244,7 +250,7 @@ export function BarChart({
     series: visibleSeries.map((item) => {
 
       return {
-        name: item.name,
+        name: t(item.name),
 
         type: "bar" as const,
 
@@ -332,7 +338,7 @@ export function BarChart({
                 mb: subtitle ? 0.4 : 0,
               }}
             >
-              {title}
+              {t(title)}
             </Typography>
           )}
 
@@ -343,7 +349,7 @@ export function BarChart({
                 color: "text.secondary",
               }}
             >
-              {subtitle}
+              {t(subtitle)}
             </Typography>
           )}
         </Box>
@@ -437,7 +443,7 @@ export function BarChart({
                       : "none",
                   }}
                 >
-                  {item.name}
+                  {t(item.name)}
                 </Typography>
               </Box>
             );

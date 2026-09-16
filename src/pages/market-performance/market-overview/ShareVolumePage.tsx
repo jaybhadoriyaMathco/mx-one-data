@@ -34,6 +34,7 @@ import {
   type SomPeriod,
 } from "../../../utils/constants";
 import { salesSomColumns, salesSomRows, salesRsvRows } from "../../../utils/tableData";
+import { useTranslation } from "../../../i18n/I18nContext";
 
 const pageContainerSx = {
   width: "100%",
@@ -146,6 +147,7 @@ export function ShareVolumePage() {
     </>
   );
 
+  const { t } = useTranslation();
   const [brandView, setBrandView] =
     useState<"All Tech" | "Dry" | "Wet">("All Tech");
 
@@ -184,7 +186,7 @@ export function ShareVolumePage() {
             lineHeight: 1.3,
           }}
         >
-          Share & Volume
+          {t("Share & Volume")}
         </Typography>
 
         <Typography
