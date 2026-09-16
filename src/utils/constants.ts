@@ -1246,3 +1246,209 @@ export const CATMAN_DATA: Record<CatmanTab, CatmanDataset> = {
     },
   },
 };
+
+
+/* ============================================================
+   SOM & MARKET SHARE
+   ============================================================ */
+
+export type SomView = "Trend" | "Category" | "Channel" | "Sub-channel";
+export type SomPeriod = "Monthly" | "Quarterly" | "Yearly";
+
+export const SOM_MARS = "#0000A0";
+export const SOM_NESTLE = "#FF7900";
+export const SOM_MALTA = "#22D3EE";
+export const SOM_ADM = "#BC2486";
+export const SOM_TOTAL = "#6B7280";
+export const SOM_MODERN = "#0000A0";
+export const SOM_TRADITIONAL = "#7C7CE0";
+
+export const SOM_LEGEND = [
+  { name: "MARS", color: SOM_MARS },
+  { name: "Nestlé", color: SOM_NESTLE },
+  { name: "Malta", color: SOM_MALTA },
+  { name: "ADM", color: SOM_ADM },
+];
+
+/* ---------- TREND ---------- */
+
+export const somTrendMonthlyXAxis = [
+  "Jan24","Feb24","Mar24","Apr24","May24","Jun24","Jul24","Aug24","Sep24","Oct24",
+  "Nov24","Dec24","Jan25","Feb25","Mar25","Apr25","May25","Jun25","Jul25","Aug25",
+  "Sep25","Oct25","Nov25","Dec25","Jan26","Feb26","Mar26","Apr26","May26","Jun26",
+];
+
+export const somTrendQuarterlyXAxis = [
+  "Q1 24","Q2 24","Q3 24","Q4 24","Q1 25","Q2 25","Q3 25","Q4 25","Q1 26","Q2 26",
+];
+
+export const somTrendYearlyXAxis = ["2024", "2025", "2026 YTD"];
+
+export const somTrendMonthlySeries = [
+  {
+    name: "MARS",
+    color: SOM_MARS,
+    data: [42.1,42.0,42.2,41.8,42.0,41.6,42.3,42.1,41.9,42.6,42.4,42.0,41.8,42.5,42.7,41.4,41.0,41.2,42.3,40.9,42.6,42.1,41.8,42.4,42.8,42.2,42.5,42.0,42.3,42.1],
+  },
+  {
+    name: "Nestlé",
+    color: SOM_NESTLE,
+    data: [34.5,34.7,35.0,35.2,35.4,35.6,35.3,34.8,34.6,34.9,35.8,36.2,36.4,36.0,35.4,36.1,36.6,36.3,35.9,35.2,36.0,36.4,36.2,35.8,36.5,36.8,37.0,37.2,36.9,36.6],
+  },
+  {
+    name: "Malta",
+    color: SOM_MALTA,
+    data: [10.2,10.1,10.0,10.3,10.4,10.2,10.1,10.0,10.2,10.1,9.9,9.8,9.9,10.0,10.1,10.2,10.0,9.9,10.1,10.3,10.4,10.2,10.0,9.9,10.1,10.2,10.0,9.8,9.9,9.6],
+  },
+  {
+    name: "ADM",
+    color: SOM_ADM,
+    data: [5.4,5.5,5.4,5.3,5.5,5.6,5.5,5.4,5.3,5.5,5.6,5.4,5.3,5.2,5.4,5.5,5.3,5.2,5.4,5.5,5.3,5.2,5.1,5.3,5.2,5.1,5.0,5.2,5.1,5.0],
+  },
+  {
+    name: "Total Category growth %",
+    color: SOM_TOTAL,
+    dashed: true,
+    yAxisIndex: 1,
+    data: [4.1,4.4,4.8,5.1,5.4,5.2,4.9,4.6,4.3,4.7,5.2,5.6,5.9,5.5,5.1,4.8,5.3,5.8,6.1,5.7,5.2,4.9,5.4,5.9,6.2,5.8,5.4,5.1,5.3,5.0],
+  },
+];
+
+export const somTrendQuarterlySeries = [
+  { name: "MARS", color: SOM_MARS, data: [42.1,41.8,42.1,42.3,42.3,41.2,41.9,42.1,42.5,42.1] },
+  { name: "Nestlé", color: SOM_NESTLE, data: [34.7,35.4,34.9,35.6,35.9,36.3,35.7,36.1,36.8,36.9] },
+  { name: "Malta", color: SOM_MALTA, data: [10.1,10.3,10.1,9.9,10.0,10.0,10.3,10.0,10.1,9.8] },
+  { name: "ADM", color: SOM_ADM, data: [5.4,5.5,5.4,5.5,5.3,5.3,5.4,5.2,5.1,5.1] },
+  { name: "Total Category growth %", color: SOM_TOTAL, dashed: true, yAxisIndex: 1, data: [4.4,5.2,4.6,5.2,5.5,5.3,5.7,5.4,5.8,5.1] },
+];
+
+export const somTrendYearlySeries = [
+  { name: "MARS", color: SOM_MARS, data: [42.1, 41.9, 42.3] },
+  { name: "Nestlé", color: SOM_NESTLE, data: [35.2, 36.0, 36.9] },
+  { name: "Malta", color: SOM_MALTA, data: [10.1, 10.1, 9.9] },
+  { name: "ADM", color: SOM_ADM, data: [5.5, 5.3, 5.1] },
+  { name: "Total Category growth %", color: SOM_TOTAL, dashed: true, yAxisIndex: 1, data: [4.8, 5.4, 5.3] },
+];
+
+/* ---------- CATEGORY ---------- */
+
+export const somCategoryXAxis = ["Dog", "Cat", "Care & Treats"];
+
+export const somCategorySeries = [
+  { name: "MARS", color: SOM_MARS, data: [42.8, 40.6, 38.4] },
+  { name: "Nestlé", color: SOM_NESTLE, data: [34.7, 35.9, 33.5] },
+  { name: "Malta", color: SOM_MALTA, data: [9.8, 9.6, 12.1] },
+  { name: "ADM", color: SOM_ADM, data: [5.2, 4.9, 5.6] },
+];
+
+/* ---------- CHANNEL ---------- */
+
+export const somChannelXAxis = ["MARS", "Nestlé", "Malta", "ADM"];
+
+export const somChannelSeries = [
+  { name: "Modern", color: SOM_MODERN, data: [36.4, 36.6, 9.5, 4.7] },
+  { name: "Traditional", color: SOM_TRADITIONAL, data: [34.8, 33.1, 16.1, 8.6] },
+];
+
+export const somChannelLegend = [
+  { name: "Modern", color: SOM_MODERN },
+  { name: "Traditional", color: SOM_TRADITIONAL },
+];
+
+/* ---------- SUB-CHANNEL ---------- */
+
+export const somSubChannelXAxis = ["SS", "Proximity", "WHS", "C&C", "Other SS"];
+
+export const somSubChannelSeries = [
+  { name: "MARS", color: SOM_MARS, data: [51.6, 54.2, 33.7, 31.0, 45.8] },
+  { name: "Nestlé", color: SOM_NESTLE, data: [37.0, 28.9, 35.5, 38.4, 40.9] },
+  { name: "Malta", color: SOM_MALTA, data: [11.4, 3.7, 15.1, 18.5, 13.3] },
+  { name: "ADM", color: SOM_ADM, data: [6.1, 1.8, 7.9, 9.9, 7.0] },
+];
+
+/* ---------- TABLE ---------- */
+
+export const somTableColumns = [
+  { key: "manufacturer", label: "Manufacturer", align: "left" as const, width: 180, sticky: true },
+  { key: "som", label: "SOM", align: "left" as const, width: 110 },
+  { key: "vsPrev", label: "vs Prev", align: "left" as const, width: 110 },
+  { key: "ytd", label: "YTD", align: "left" as const, width: 110 },
+  { key: "valueGr", label: "Value Gr", align: "left" as const, width: 110 },
+  { key: "volGr", label: "Vol Gr", align: "left" as const, width: 110 },
+  { key: "trend", label: "Trend (6M)", align: "left" as const, width: 150 },
+];
+
+export const somTableRows = [
+  {
+    id: "mars",
+    cells: {
+      manufacturer: { value: "MARS", emphasis: true, dotColor: SOM_MARS },
+      som: { value: "36.9%", emphasis: true },
+      vsPrev: { value: "+0.2pp", status: "positive" as const },
+      ytd: { value: "36.9%" },
+      valueGr: { value: "+4.4%", status: "positive" as const },
+      volGr: { value: "-2.1%", status: "negative" as const },
+      trend: {
+        value: null,
+        display: "sparkline" as const,
+        sparkline: { data: [36.4, 36.5, 36.6, 36.8, 36.9, 36.9], color: SOM_MARS },
+      },
+    },
+  },
+  {
+    id: "nestle",
+    cells: {
+      manufacturer: { value: "Nestlé", emphasis: true, dotColor: SOM_NESTLE },
+      som: { value: "37.1%", emphasis: true },
+      vsPrev: { value: "-1.0pp", status: "negative" as const },
+      ytd: { value: "37.1%" },
+      valueGr: { value: "+3.6%", status: "positive" as const },
+      volGr: { value: "+1.3%", status: "positive" as const },
+      trend: {
+        value: null,
+        display: "sparkline" as const,
+        sparkline: { data: [36.2, 36.3, 36.6, 36.9, 37.1, 37.1], color: SOM_NESTLE },
+      },
+    },
+  },
+  {
+    id: "malta",
+    cells: {
+      manufacturer: { value: "Malta", emphasis: true, dotColor: SOM_MALTA },
+      som: { value: "9.6%", emphasis: true },
+      vsPrev: { value: "-0.2pp", status: "negative" as const },
+      ytd: { value: "9.6%" },
+      valueGr: { value: "+1.1%", status: "positive" as const },
+      volGr: { value: "-5.2%", status: "negative" as const },
+      trend: {
+        value: null,
+        display: "sparkline" as const,
+        sparkline: { data: [10.1, 10.0, 9.9, 9.8, 9.7, 9.6], color: SOM_MALTA },
+      },
+    },
+  },
+  {
+    id: "adm",
+    cells: {
+      manufacturer: { value: "ADM", emphasis: true, dotColor: SOM_ADM },
+      som: { value: "5.0%", emphasis: true },
+      vsPrev: { value: "-0.1pp", status: "negative" as const },
+      ytd: { value: "5.0%" },
+      valueGr: { value: "+0.6%", status: "positive" as const },
+      volGr: { value: "-3.1%", status: "negative" as const },
+      trend: {
+        value: null,
+        display: "sparkline" as const,
+        sparkline: { data: [5.4, 5.3, 5.2, 5.05, 5.0, 5.0], color: SOM_ADM },
+      },
+    },
+  },
+];
+
+/* dot colour per manufacturer row, applied via column labelDotColor on the first col */
+export const somTableRowDots: Record<string, string> = {
+  mars: SOM_MARS,
+  nestle: SOM_NESTLE,
+  malta: SOM_MALTA,
+  adm: SOM_ADM,
+};

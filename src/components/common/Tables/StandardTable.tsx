@@ -11,6 +11,9 @@ import {
   useTheme,
 } from "@mui/material";
 import type { ReactNode } from "react";
+import { useMemo } from "react";
+import ReactECharts from "echarts-for-react";
+import type { EChartsOption } from "echarts";
 
 export type TableCellStatus = "positive" | "negative" | "warning" | "neutral";
 
@@ -18,7 +21,14 @@ export type StandardTableCell = {
   value: string | number | null;
   status?: TableCellStatus;
   emphasis?: boolean;
-  display?: "text" | "tag";
+  display?: "text" | "tag" | "sparkline";
+  dotColor?: string;
+  sparkline?: {
+    data: number[];
+    color: string;
+    width?: number;
+    height?: number;
+  };
   bar?: {
     value: number;
     max?: number;
@@ -56,6 +66,67 @@ type StandardTableProps = {
   maxHeight?: number | string;
   compact?: boolean;
 };
+
+
+function Sparkline({
+  data,
+  color,
+  width = 110,
+  height = 28,
+}: {
+  data: number[];
+  color: string;
+  width?: number;
+  height?: number;
+}) {
+  const option: EChartsOption = useMemo(
+    () => ({
+      grid: { left: 2, right: 2, top: 4, bottom: 4, containLabel: false },
+
+      xAxis: {
+        type: "category",
+        show: false,
+        boundaryGap: false,
+        data: data.map((_, index) => index),
+      },
+
+      yAxis: {
+        type: "value",
+        show: false,
+        scale: true,
+      },
+
+      series: [
+        {
+          type: "line",
+          data,
+          smooth: true,
+          showSymbol: false,
+          silent: true,
+          lineStyle: { width: 1.8, color },
+          itemStyle: { color },
+          emphasis: { disabled: true },
+        },
+      ],
+
+      animation: false,
+    }),
+    [data, color],
+  );
+
+  if (!data || data.length < 2) {
+    return null;
+  }
+
+  return (
+    <ReactECharts
+      option={option}
+      style={{ width, height }}
+      notMerge
+      lazyUpdate
+    />
+  );
+}
 
 function renderCellValue(cell: StandardTableCell) {
   if (cell.value === null || cell.value === undefined) {
@@ -101,6 +172,32 @@ function TableDataCell({
     },
   };
   const tagStyle = cell.status ? tagStyles[cell.status] : tagStyles.neutral;
+
+  if (cell.display === "sparkline" && cell.sparkline) {
+    const sparkWidth = cell.sparkline.width ?? 110;
+    const sparkHeight = cell.sparkline.height ?? 28;
+
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent:
+            align === "right" ? "flex-end" : align === "center" ? "center" : "flex-start",
+          width: "100%",
+          height: sparkHeight,
+          "& > div": { width: sparkWidth, height: sparkHeight },
+        }}
+      >
+        <Sparkline
+          data={cell.sparkline.data}
+          color={cell.sparkline.color}
+          width={cell.sparkline.width}
+          height={cell.sparkline.height}
+        />
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -153,6 +250,21 @@ function TableDataCell({
           fontWeight: cell.display === "tag" || cell.emphasis ? 600 : "inherit",
         }}
       >
+        {cell.dotColor && (
+          <Box
+            component="span"
+            sx={{
+              display: "inline-block",
+              width: 9,
+              height: 9,
+              minWidth: 9,
+              borderRadius: "50%",
+              bgcolor: cell.dotColor,
+              mr: 1,
+              verticalAlign: "middle",
+            }}
+          />
+        )}
         {renderCellValue(cell)}
       </Box>
     </Box>
