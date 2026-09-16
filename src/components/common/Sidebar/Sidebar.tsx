@@ -1,5 +1,6 @@
 import { Box, IconButton } from "@mui/material";
 import { NavLink, useLocation } from "react-router-dom";
+import { useTranslation } from "../../../i18n/I18nContext";
 
 export type SidebarEntry = {
   label: string;
@@ -43,6 +44,7 @@ export function Sidebar({
   onToggleCollapse,
 }: SidebarProps) {
   const location = useLocation();
+  const { t } = useTranslation();
 
   const sidebarWidth = collapsed ? 46 : 220;
 
@@ -102,7 +104,7 @@ export function Sidebar({
         {!collapsed && title}
         <IconButton
           onClick={onToggleCollapse}
-          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          aria-label={collapsed ? t("Expand sidebar") : t("Collapse sidebar")}
           sx={{
             width: 24,
             height: 24,
@@ -200,7 +202,7 @@ export function Sidebar({
                     }}
                   />
                 )}
-                {!collapsed && item.label}
+                {!collapsed && t(item.label)}
               </Box>
 
               {hasChildren && !collapsed && (
@@ -250,7 +252,7 @@ export function Sidebar({
                           },
                         }}
                       >
-                        {child.label}
+                        {t(child.label)}
                       </Box>
                     );
                   })}

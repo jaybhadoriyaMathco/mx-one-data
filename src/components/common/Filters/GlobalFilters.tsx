@@ -16,6 +16,7 @@ import { alpha } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 
 import type { AppDispatch, RootState } from "../../../store";
+import { useTranslation } from "../../../i18n/I18nContext";
 import {
   removeComparePeriod,
   removeCompareYear,
@@ -184,6 +185,7 @@ function SegmentFilter({
 
 function GlobalFilters() {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation();
 
   const {
     tech,
@@ -209,40 +211,40 @@ function GlobalFilters() {
   ];
 
   const techOptions: Option[] = [
-    { label: "All", value: "all" },
-    { label: "Cats", value: "cats" },
-    { label: "Dogs", value: "dogs" },
+    { label: t("All"), value: "all" },
+    { label: t("Cats"), value: "cats" },
+    { label: t("Dogs"), value: "dogs" },
   ];
 
   const channelOptions: Option[] = [
-    { label: "All", value: "all" },
-    { label: "Modern", value: "modern" },
-    { label: "Traditional", value: "traditional" },
+    { label: t("All"), value: "all" },
+    { label: t("Modern"), value: "modern" },
+    { label: t("Traditional"), value: "traditional" },
   ];
 
   const segmentOptions: Option[] = [
-    { label: "All", value: "all" },
-    { label: "Dry", value: "dry" },
-    { label: "Wet", value: "wet" },
-    { label: "C&T", value: "ct" },
+    { label: t("All"), value: "all" },
+    { label: t("Dry"), value: "dry" },
+    { label: t("Wet"), value: "wet" },
+    { label: t("C&T"), value: "ct" },
   ];
 
   const metricOptions: Option[] = [
-    { label: "RSV", value: "rsv" },
-    { label: "Volume", value: "volume" },
+    { label: t("RSV"), value: "rsv" },
+    { label: t("Volume"), value: "volume" },
   ];
 
   const getSubChannelOptions = (): Option[] => {
     switch (channel) {
       case "modern":
         return [
-          { label: "All", value: "all" },
+          { label: t("All"), value: "all" },
           { label: "SS", value: "ss" },
           { label: "Proximity", value: "proximity" },
         ];
       case "traditional":
         return [
-          { label: "All", value: "all" },
+          { label: t("All"), value: "all" },
           { label: "WHS", value: "whs" },
           { label: "C&C", value: "c&c" },
           { label: "Other SS", value: "other-ss" },
@@ -310,10 +312,10 @@ function GlobalFilters() {
             whiteSpace: "nowrap",
           }}
         >
-          FILTERS
+          {t("FILTERS")}
         </Typography>
 
-        <FilterGroup label="Tech">
+        <FilterGroup label={t("Tech")}>
           <SegmentFilter
             value={tech}
             options={techOptions}
@@ -321,7 +323,7 @@ function GlobalFilters() {
           />
         </FilterGroup>
 
-        <FilterGroup label="Channel">
+        <FilterGroup label={t("Channel")}>
           <SegmentFilter
             value={channel}
             options={channelOptions}
@@ -330,7 +332,7 @@ function GlobalFilters() {
         </FilterGroup>
 
         {channel !== "all" && (
-          <FilterGroup label="Sub-channel">
+          <FilterGroup label={t("Sub-channel")}>
             <SegmentFilter
               value={subChannel}
               options={getSubChannelOptions()}
@@ -339,7 +341,7 @@ function GlobalFilters() {
           </FilterGroup>
         )}
 
-        <FilterGroup label="Segment">
+        <FilterGroup label={t("Segment")}>
           <SegmentFilter
             value={segment}
             options={segmentOptions}
@@ -347,7 +349,7 @@ function GlobalFilters() {
           />
         </FilterGroup>
 
-        <FilterGroup label="Serve Size">
+        <FilterGroup label={t("Serve Size")}>
           <Select
             value={serveSize}
             size="small"
@@ -357,7 +359,7 @@ function GlobalFilters() {
               dispatch(setServeSize(event.target.value))
             }
           >
-            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="all">{t("All")}</MenuItem>
             <MenuItem value="less-500g">&lt;500g</MenuItem>
             <MenuItem value="500g-1.5kg">500g–1.5kg</MenuItem>
             <MenuItem value="1.5-4kg">1.5–4kg</MenuItem>
@@ -365,7 +367,7 @@ function GlobalFilters() {
           </Select>
         </FilterGroup>
 
-        <FilterGroup label="Price Range">
+        <FilterGroup label={t("Price Range")}>
           <Select
             value={priceRange}
             size="small"
@@ -375,15 +377,15 @@ function GlobalFilters() {
               dispatch(setPriceRange(event.target.value))
             }
           >
-            <MenuItem value="all">All</MenuItem>
-            <MenuItem value="value">Value</MenuItem>
-            <MenuItem value="mainstream">Mainstream</MenuItem>
-            <MenuItem value="premium">Premium</MenuItem>
-            <MenuItem value="superpremium">Superpremium</MenuItem>
+            <MenuItem value="all">{t("All")}</MenuItem>
+            <MenuItem value="value">{t("Value")}</MenuItem>
+            <MenuItem value="mainstream">{t("Mainstream")}</MenuItem>
+            <MenuItem value="premium">{t("Premium")}</MenuItem>
+            <MenuItem value="superpremium">{t("Superpremium")}</MenuItem>
           </Select>
         </FilterGroup>
 
-        <FilterGroup label="Nielsen Area">
+        <FilterGroup label={t("Nielsen Area")}>
           <Select
             value={nielsenArea}
             size="small"
@@ -393,14 +395,14 @@ function GlobalFilters() {
               dispatch(setNielsenArea(event.target.value))
             }
           >
-            <MenuItem value="all">All</MenuItem>
-            <MenuItem value="north">North</MenuItem>
-            <MenuItem value="central">Central</MenuItem>
-            <MenuItem value="south">South</MenuItem>
+            <MenuItem value="all">{t("All")}</MenuItem>
+            <MenuItem value="north">{t("North")}</MenuItem>
+            <MenuItem value="central">{t("Central")}</MenuItem>
+            <MenuItem value="south">{t("South")}</MenuItem>
           </Select>
         </FilterGroup>
 
-        <FilterGroup label="Metric">
+        <FilterGroup label={t("Metric")}>
           <SegmentFilter
             value={metric}
             options={metricOptions}
@@ -408,7 +410,7 @@ function GlobalFilters() {
           />
         </FilterGroup>
 
-        <FilterGroup label="Period">
+        <FilterGroup label={t("Period")}>
           <Select
             value={period}
             size="small"
@@ -453,7 +455,7 @@ function GlobalFilters() {
           </Select>
         </FilterGroup>
 
-        <FilterGroup label="Compare with">
+        <FilterGroup label={t("Compare with")}>
           <Box sx={{ position: "relative", width: 136, height: 30 }}>
             <Select
               multiple
@@ -470,7 +472,7 @@ function GlobalFilters() {
                 transformOrigin: { vertical: "top", horizontal: "left" },
               }}
               onChange={handleCompareChange}
-              renderValue={() => "+ Add period"}
+              renderValue={() => t("+ Add period")}
             >
               <ListSubheader
                 sx={{
@@ -482,7 +484,7 @@ function GlobalFilters() {
                   lineHeight: "28px",
                 }}
               >
-                YEAR
+                {t("YEAR")}
               </ListSubheader>
               <MenuItem value="year:2024">
                 <Checkbox size="small" checked={compareYears.includes("2024")} />
@@ -502,7 +504,7 @@ function GlobalFilters() {
                   lineHeight: "28px",
                 }}
               >
-                PERIOD
+                {t("PERIOD")}
               </ListSubheader>
               <MenuItem value="period:YTD">
                 <Checkbox size="small" checked={comparePeriods.includes("YTD")} />

@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "../../i18n/I18nContext";
 
 const NAVIGATION = [
   ["COMMAND CENTRE", "/command-center"],
@@ -10,6 +11,7 @@ const NAVIGATION = [
 ] as const;
 
 export function NavBarMenu() {
+  const { t } = useTranslation();
   return (
     <Box
       component="nav"
@@ -53,7 +55,7 @@ export function NavBarMenu() {
             },
           }}
         >
-          {label}
+          {t(label)}
         </Box>
       ))}
     </Box>

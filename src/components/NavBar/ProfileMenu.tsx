@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { GlobeIcon, MoonIcon, SettingsIcon, SignOutIcon } from "./icons";
+import { useTranslation } from "../../i18n/I18nContext";
 
 type ProfileMenuProps = {
   user: { name: string; role: string };
@@ -8,6 +9,8 @@ type ProfileMenuProps = {
 };
 
 export function ProfileMenu({ user, isDark, toggleTheme }: ProfileMenuProps) {
+  const { language, setLanguage, t } = useTranslation();
+
   return (
     <>
       <Box
@@ -24,28 +27,28 @@ export function ProfileMenu({ user, isDark, toggleTheme }: ProfileMenuProps) {
       >
         {user.name} · {user.role}
       </Box>
-      <ProfileRow icon={<GlobeIcon />} label="Language" disabled isDark={isDark}>
-        <ProfileOption label="EN" active />
-        <ProfileOption label="ES" />
+      <ProfileRow icon={<GlobeIcon />} label={t("Language")} isDark={isDark}>
+        <ProfileOption label="EN" active={language === "en"} onClick={() => setLanguage("en")} />
+        <ProfileOption label="ES" active={language === "es"} onClick={() => setLanguage("es")} />
       </ProfileRow>
-      <ProfileRow icon={<MoonIcon />} label="Theme" isDark={isDark}>
+      <ProfileRow icon={<MoonIcon />} label={t("Theme")} isDark={isDark}>
         <ProfileOption
-          label="Light"
+          label={t("Light")}
           active={!isDark}
           onClick={() => {
             if (isDark) toggleTheme();
           }}
         />
         <ProfileOption
-          label="Dark"
+          label={t("Dark")}
           active={isDark}
           onClick={() => {
             if (!isDark) toggleTheme();
           }}
         />
       </ProfileRow>
-      <ProfileRow icon={<SettingsIcon />} label="Settings" disabled isDark={isDark} />
-      <ProfileRow icon={<SignOutIcon />} label="Sign out" disabled danger isDark={isDark} />
+      <ProfileRow icon={<SettingsIcon />} label={t("Settings")} disabled isDark={isDark} />
+      <ProfileRow icon={<SignOutIcon />} label={t("Sign out")} disabled danger isDark={isDark} />
     </>
   );
 }

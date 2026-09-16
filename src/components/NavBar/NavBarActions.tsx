@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, IconButton, Popover, Tooltip } from "@mui/material";
 import { BellIcon } from "./icons";
 import { ProfileMenu } from "./ProfileMenu";
+import { useTranslation } from "../../i18n/I18nContext";
 
 type NavBarActionsProps = {
   user: { name: string; role: string };
@@ -10,6 +11,7 @@ type NavBarActionsProps = {
 };
 
 export function NavBarActions({ user, isDark, toggleTheme }: NavBarActionsProps) {
+  const { t } = useTranslation();
   const [profileAnchor, setProfileAnchor] = useState<HTMLElement | null>(null);
   const profileOpen = Boolean(profileAnchor);
 
@@ -23,10 +25,10 @@ export function NavBarActions({ user, isDark, toggleTheme }: NavBarActionsProps)
         ml: { xs: "auto", sm: 0 },
       }}
     >
-      <Tooltip title="Notifications">
+      <Tooltip title={t("Notifications")}>
         <Box sx={{ position: "relative" }}>
           <IconButton
-            aria-label="Notifications"
+            aria-label={t("Notifications")}
             sx={{
               color: "common.white",
               width: { xs: 32, xl: 38 },
@@ -65,7 +67,7 @@ export function NavBarActions({ user, isDark, toggleTheme }: NavBarActionsProps)
         component="button"
         type="button"
         onClick={(event) => setProfileAnchor(event.currentTarget)}
-        aria-label="Open user profile menu"
+        aria-label={t("Open user profile menu")}
         aria-haspopup="true"
         aria-expanded={profileOpen ? "true" : undefined}
         sx={{

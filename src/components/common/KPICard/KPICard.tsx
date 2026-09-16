@@ -3,6 +3,7 @@ import { alpha } from "@mui/material/styles";
 
 import type { KPICardProps, KPIStatus } from "./types";
 import KPITrendChart from "./KPITrendChart";
+import { useTranslation } from "../../../i18n/I18nContext";
 
 function getStatusColor(status?: KPIStatus) {
   if (status === "positive") return "success.main";
@@ -24,6 +25,7 @@ function KPICard({
   className = "",
   minHeight,
 }: KPICardProps) {
+  const { t } = useTranslation();
   const comparisonColor = getStatusColor(comparison?.status);
 
   return (
@@ -91,7 +93,7 @@ function KPICard({
               textTransform: "uppercase",
             }}
           >
-            {label}
+            {t(label)}
           </Typography>
 
           <Typography
@@ -126,7 +128,7 @@ function KPICard({
                   lineHeight: 1.4,
                 }}
               >
-                {comparison.value}
+                {t(comparison.value)}
               </Typography>
 
               {comparison.text && (
@@ -139,7 +141,7 @@ function KPICard({
                     lineHeight: 1.4,
                   }}
                 >
-                  {comparison.text}
+                  {t(comparison.text)}
                 </Typography>
               )}
             </Box>
@@ -181,7 +183,7 @@ function KPICard({
                     textTransform: "uppercase",
                   }}
                 >
-                  {item.label}
+                  {t(item.label)}
                 </Typography>
 
                 <Typography
@@ -206,7 +208,7 @@ function KPICard({
                       lineHeight: 1.4,
                     }}
                   >
-                    {item.comparison}
+                    {t(item.comparison)}
                   </Typography>
                 )}
               </Box>

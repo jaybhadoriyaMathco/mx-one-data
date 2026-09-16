@@ -1,9 +1,11 @@
 import { Box, Link, Typography } from "@mui/material";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import { ROUTE_LABELS } from "../../../utils/constants";
+import { useTranslation } from "../../../i18n/I18nContext";
 
 export function ModuleBreadcrumbs() {
   const location = useLocation();
+  const { t } = useTranslation();
 
   const segments = location.pathname.split("/").filter(Boolean);
   if (segments.length === 0) {
@@ -20,7 +22,7 @@ export function ModuleBreadcrumbs() {
 
   segments.forEach((segment) => {
     currentPath += `/${segment}`;
-    const label = ROUTE_LABELS[segment] ?? segment.replace(/-/g, " ");
+    const label = t(ROUTE_LABELS[segment] ?? segment.replace(/-/g, " "));
     crumbs.push({ label, path: currentPath });
   });
 

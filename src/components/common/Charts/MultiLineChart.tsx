@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import ReactECharts from "echarts-for-react";
 import type { EChartsOption } from "echarts";
+import { useTranslation } from "../../../i18n/I18nContext";
 
 type YAxisOption = Exclude<NonNullable<EChartsOption["yAxis"]>, readonly unknown[]>;
 
@@ -82,6 +83,7 @@ export function MultiLineChart({
 }: MultiLineChartProps) {
 
   const theme = useTheme();
+  const { t } = useTranslation();
   const isDark = theme.palette.mode === "dark";
 
   const [visibleSeries, setVisibleSeries] = useState<
@@ -137,7 +139,7 @@ export function MultiLineChart({
     {
       type: "value",
 
-      name: leftAxisName,
+      name: leftAxisName ? t(leftAxisName) : undefined,
 
       nameLocation: "middle",
       nameRotate: 90,
@@ -189,7 +191,7 @@ export function MultiLineChart({
     yAxis.push({
       type: "value",
 
-      name: rightAxisName,
+      name: rightAxisName ? t(rightAxisName) : undefined,
       position: "right",
 
       nameLocation: "middle",
@@ -276,7 +278,7 @@ export function MultiLineChart({
       data: xAxisData,
       boundaryGap: false,
 
-      name: xAxisName,
+      name: xAxisName ? t(xAxisName) : undefined,
       nameLocation: "middle",
       nameGap: 32,
 
@@ -313,7 +315,7 @@ export function MultiLineChart({
         const chartColor = getSeriesColor(item.color);
 
         return {
-          name: item.name,
+          name: t(item.name),
           type: "line" as const,
 
           data: item.data,
@@ -405,7 +407,7 @@ export function MultiLineChart({
               color: "text.primary",
             }}
           >
-            {title}
+            {t(title)}
           </Typography>
 
           {subtitle && (
@@ -441,7 +443,7 @@ export function MultiLineChart({
                 px: 1,
               }}
             >
-              {actionLabel}
+              {t(actionLabel)}
             </Button>
           )}
 
@@ -505,7 +507,7 @@ export function MultiLineChart({
                       },
                     }}
                   >
-                    {tab}
+                    {t(tab)}
                   </Button>
                 );
               })}
@@ -575,7 +577,7 @@ export function MultiLineChart({
                       : "line-through",
                   }}
                 >
-                  {item.name}
+                  {t(item.name)}
                 </Typography>
               </Box>
             );

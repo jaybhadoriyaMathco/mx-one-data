@@ -1,4 +1,5 @@
 import { Box, LinearProgress, Typography } from "@mui/material";
+import { useTranslation } from "../../../i18n/I18nContext";
 
 interface TargetKPICardProps {
   label: string;
@@ -25,6 +26,7 @@ export function TargetKPICard({
   progress,
   accentColor,
 }: TargetKPICardProps) {
+  const { t } = useTranslation();
   const comparisonColor =
     comparisonStatus === "positive"
       ? "#1F7A52"
@@ -75,7 +77,7 @@ export function TargetKPICard({
             textTransform: "uppercase",
           }}
         >
-          {label}
+          {t(label)}
         </Typography>
 
         {/* Main Value */}
@@ -106,7 +108,7 @@ export function TargetKPICard({
                 color: comparisonColor,
               }}
             >
-              {comparison}
+              {t(comparison)}
             </Typography>
           )}
 
@@ -117,7 +119,7 @@ export function TargetKPICard({
                 color: "text.secondary",
               }}
             >
-              {subtitle}
+              {t(subtitle)}
             </Typography>
           )}
         </Box>
@@ -148,7 +150,7 @@ export function TargetKPICard({
               textTransform: "uppercase",
             }}
           >
-            Target {target}
+            {t("Target")} {target}
           </Typography>
 
           <Typography

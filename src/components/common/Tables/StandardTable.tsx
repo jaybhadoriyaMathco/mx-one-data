@@ -14,6 +14,7 @@ import type { ReactNode } from "react";
 import { useMemo } from "react";
 import ReactECharts from "echarts-for-react";
 import type { EChartsOption } from "echarts";
+import { useTranslation } from "../../../i18n/I18nContext";
 
 export type TableCellStatus = "positive" | "negative" | "warning" | "neutral";
 
@@ -283,6 +284,7 @@ export function StandardTable({
   compact = false,
 }: StandardTableProps) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const isDark = theme.palette.mode === "dark";
   const hasHeaderGroups = Boolean(columnGroups?.length);
   const cellPadding = compact ? "7px 10px" : "9px 12px";
@@ -325,12 +327,12 @@ export function StandardTable({
           <Box>
             {title && (
               <Typography sx={{ fontSize: 13, fontWeight: 600, color: bodyText }}>
-                {title}
+                {title && t(title)}
               </Typography>
             )}
             {subtitle && (
               <Typography sx={{ mt: 0.25, color: isDark ? "#B5BCD1" : "#8A8A8A", fontSize: 11 }}>
-                {subtitle}
+                {subtitle && t(subtitle)}
               </Typography>
             )}
           </Box>
@@ -402,7 +404,7 @@ export function StandardTable({
                       letterSpacing: "0.03em",
                     }}
                   >
-                    {group.label}
+                    {t(group.label)}
                   </TableCell>
                 ))}
               </TableRow>
@@ -446,10 +448,10 @@ export function StandardTable({
                           boxShadow: `0 0 0 1px ${isDark ? "rgba(255,255,255,0.16)" : "rgba(0,0,0,0.08)"}`,
                         }}
                       />
-                      <Box component="span">{column.label}</Box>
+                      <Box component="span">{t(column.label)}</Box>
                     </Box>
                   ) : (
-                    column.label
+                    t(column.label)
                   )}
                 </TableCell>
               ))}

@@ -1,4 +1,5 @@
 import { Box, alpha, useTheme } from "@mui/material";
+import { useTranslation } from "../../../i18n/I18nContext";
 
 export function TableSegmentedControl<T extends string>({
   options,
@@ -10,6 +11,7 @@ export function TableSegmentedControl<T extends string>({
   onChange: (value: T) => void;
 }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const isDark = theme.palette.mode === "dark";
 
   return (
@@ -82,7 +84,7 @@ export function TableSegmentedControl<T extends string>({
               },
             }}
           >
-            {option}
+            {t(option)}
           </Box>
         );
       })}
