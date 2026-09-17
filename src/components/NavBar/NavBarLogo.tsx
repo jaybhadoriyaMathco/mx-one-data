@@ -1,12 +1,15 @@
 import { Box } from "@mui/material";
 import marsLogo from "../../assets/logo/mars-pet-nutrition-logo-white.svg";
+import { useNavigate } from "react-router-dom";
+
 
 export function NavBarLogo() {
+  const navigate = useNavigate()
   return (
     <Box
       sx={{
         width: { xs: 180, sm: 260, xl: 320 },
-        flex: { xs: "0 0 40px", sm: "0 0 40px", xl: "0 0 60px" },
+        flex: { xs: "0 0 40px", sm: "0 0 40px", xl: "0 0 60px"},
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -17,6 +20,7 @@ export function NavBarLogo() {
     >
       <Box
         component="img"
+        onClick={() => navigate("/command-center")}
         src={marsLogo}
         alt="MARS Pet Nutrition"
         sx={{

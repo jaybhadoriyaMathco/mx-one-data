@@ -15,7 +15,16 @@ export function AppShell() {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", bgcolor: "background.default" }}>
-      <NavBar user={user} isDark={isDark} toggleTheme={toggleTheme} />
+      <NavBar
+          user={
+            user ?? {
+              name: "",
+              role: "",
+            }
+          }
+          isDark={isDark}
+          toggleTheme={toggleTheme}
+        />
       {shouldShowMarketFilters && <GlobalFilters />}
       <Box
         component="main"

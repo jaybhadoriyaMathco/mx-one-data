@@ -1,6 +1,8 @@
 import { Box } from "@mui/material";
 import { GlobeIcon, MoonIcon, SettingsIcon, SignOutIcon } from "./icons";
 import { useTranslation } from "../../i18n/I18nContext";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 type ProfileMenuProps = {
   user: { name: string; role: string };
@@ -10,6 +12,8 @@ type ProfileMenuProps = {
 
 export function ProfileMenu({ user, isDark, toggleTheme }: ProfileMenuProps) {
   const { language, setLanguage, t } = useTranslation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   return (
     <>
@@ -48,7 +52,22 @@ export function ProfileMenu({ user, isDark, toggleTheme }: ProfileMenuProps) {
         />
       </ProfileRow>
       <ProfileRow icon={<SettingsIcon />} label={t("Settings")} disabled isDark={isDark} />
-      <ProfileRow icon={<SignOutIcon />} label={t("Sign out")} disabled danger isDark={isDark} />
+      <Box
+        onClick={() => {
+          logout();
+          navigate("/");
+        }}
+        sx={{
+          cursor: "pointer",
+        }}
+      >
+        <ProfileRow
+          icon={<SignOutIcon />}
+          label={t("Sign out")}
+          danger
+          isDark={isDark}
+        />
+    </Box>
     </>
   );
 }

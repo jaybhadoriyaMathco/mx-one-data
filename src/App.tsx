@@ -17,6 +17,8 @@ import { MarketVsMarketPage } from "./pages/market-performance/mars-vs-market/Ma
 import { FactVsFcstPage } from "./pages/building-blocks/FactvsFcstPage";
 import { ExecutivePage } from "./pages/building-blocks/ExecutivePage";
 import { PerformancePage } from "./pages/building-blocks/PerformancePage";
+import  LoginPage  from "./pages/LoginPage"
+import { ProtectedRoute } from "./Routes/ProtectedRoute";
 
 import { SalesConsolePage } from "./pages/SalesConsolePage";
 
@@ -26,8 +28,16 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route element={<AppShell />}>
-              <Route index element={<Navigate to="/command-center" replace />} />
+            <Route path="/" element={<LoginPage />} />
+
+            <Route
+                element={
+                  <ProtectedRoute>
+                    <AppShell />
+                  </ProtectedRoute>
+                }
+              >
+            
               <Route path="command-center" element={<CommandCentrePage />} />
               <Route path="sales-console" element={<SalesConsolePage />} />
 
